@@ -16,7 +16,7 @@ data:
   # # https://dexidp.io/docs/connectors/
   dex.config: |
     connectors:
-      # GitHub theydo
+      # GitHub personal
       - type: github
         id: github
         name: GitHub
@@ -24,4 +24,4 @@ data:
           clientID: Ov23li2QCtAG4ZRJF3UH
           clientSecret: $dex.github.clientSecret
           orgs:
-          - name: utwo
+          - name: Utwo
