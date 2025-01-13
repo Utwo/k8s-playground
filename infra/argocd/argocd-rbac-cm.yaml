@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-rbac-cm
+data:
+  policy.default: role:readonly-custom
+  policy.csv: |
+    # Read-only role (default)
+    p, role:readonly-custom, applications, get, apps/*, allow
+
+    # Developer role (can sync but not modify)
+    p, role:developer, applications, get, apps/*, allow
+    p, role:developer, applications, sync, apps/*, allow
+    p, role:developer, logs, get, apps/*, allow
+
+    # Editor role (can modify applications)
+    p, role:editor, applications, get, apps/*, allow
+    p, role:editor, applications, sync, apps/*, allow
+    p, role:editor, applications, update, apps/*, allow
+    p, role:editor, logs, get, apps/*, allow
+
+    # Admin role (built-in, has full access)
+    # g, <org_name>:devops, role:admin
+
+    # Backend team (can modify applications)
+    # g, <org_name>:backend, role:editor
+
+    # TODO: remove this when using Github organizations with teams
+    g, CgYyODI2NjgSBmdpdGh1Yg, role:admin
