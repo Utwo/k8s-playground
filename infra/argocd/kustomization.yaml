@@ -8,6 +8,7 @@ resources:
   - namespace.yaml
   - project.yaml
   - ingress.yaml
+  - argocd-secrets.yaml
   # - repo-secret.yaml
 
 patches:
