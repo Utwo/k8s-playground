@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-cm
+  labels:
+    app.kubernetes.io/name: argocd-cm
+    app.kubernetes.io/part-of: argocd
+data:
+  # Argo CD's externally facing base URL (optional). Required when configuring SSO
+  url: https://argocd.127.0.0.1.nip.io
+
+  admin.enabled: "true" # TODO: disable in production
+
+  # # A dex connector configuration (optional). See SSO configuration documentation:
+  # # https://github.com/argoproj/argo-cd/blob/master/docs/operator-manual/sso
+  # # https://dexidp.io/docs/connectors/
+  dex.config: |
+    connectors:
+      # GitHub theydo
+      - type: github
+        id: github
+        name: GitHub
+        config:
+          clientID: Ov23li2QCtAG4ZRJF3UH
+          clientSecret: $dex.github.clientSecret
+          orgs:
+          - name: utwo
