@@ -23,5 +23,5 @@ data:
         config:
           clientID: Ov23li2QCtAG4ZRJF3UH
           clientSecret: $dex.github.clientSecret
-          orgs:
-          - name: Utwo
+          # orgs:
+          # - name: <TODO: replace with org name>
