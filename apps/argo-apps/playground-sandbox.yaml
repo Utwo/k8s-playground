@@ -10,6 +10,9 @@ spec:
       path: ./k8s/overlays/local
       targetRevision: HEAD
       kustomize:
+        images:
+          - app:latest
+          - playground-sandbox-fr:latest
         patches:
           - target:
               kind: RoleBinding
