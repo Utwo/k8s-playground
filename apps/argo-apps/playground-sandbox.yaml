@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: playground-sandbox
+  namespace: argocd
+spec:
+  project: apps
+  sources:
+    - repoURL: https://github.com/Utwo/sandbox-playground
+      path: ./k8s/overlays/local
+      targetRevision: HEAD
+  destination:
+    name: k3d-apps
+    namespace: playground-sandbox
+  syncPolicy:
+    automated: {}
+    syncOptions:
+      - CreateNamespace=true
