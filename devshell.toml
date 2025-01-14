@@ -7,4 +7,5 @@ packages = [
     "skaffold",
     "sops",
     "age",
+    "argocd",
 ]

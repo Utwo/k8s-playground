@@ -9,6 +9,7 @@ resources:
   - project.yaml
   - ingress.yaml
   - argocd-secrets.yaml
+  - clusters/k3d-apps-secret.yaml
   # - repo-secret.yaml
 
 patches:
