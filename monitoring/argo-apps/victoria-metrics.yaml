@@ -55,7 +55,7 @@ spec:
             value: "kube-prometheus-extra"
   destination:
     namespace: victoria-metrics
-    server: https://kubernetes.default.svc
+    name: in-cluster
   syncPolicy:
     syncOptions:
       - CreateNamespace=true

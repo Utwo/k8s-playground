@@ -18,7 +18,7 @@ spec:
           - $myRepo/monitoring/grafana/helm-chart-values/values.yaml
   destination:
     namespace: grafana
-    server: https://kubernetes.default.svc
+    name: in-cluster
   syncPolicy:
     automated: {}
     syncOptions:

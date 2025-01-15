@@ -18,7 +18,7 @@ spec:
           - $myRepo/monitoring/alertmanager/helm-chart-values/values.yaml
   destination:
     namespace: alertmanager
-    server: https://kubernetes.default.svc
+    name: in-cluster
   syncPolicy:
     automated: {}
     syncOptions:
