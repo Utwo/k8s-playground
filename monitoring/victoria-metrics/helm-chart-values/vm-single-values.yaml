@@ -1,0 +1,12 @@
+server:
+  retentionPeriod: 1d
+  extraArgs:
+    opentsdbHTTPListenAddr: ":4242"
+    loggerLevel: WARN
+    vmalert.proxyURL: "http://vmalert-alert-server:8080"
+  serviceMonitor:
+    enabled: true
+    extraLabels:
+      release: kube-prometheus-stack-k3s-monitoring
+  persistentVolume:
+    size: 1Gi

@@ -1,0 +1,18 @@
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMAlert
+metadata:
+  name: alert-server
+spec:
+  replicaCount: 1
+  extraArgs:
+    remoteWrite.disablePathAppend: "true"
+  datasource:
+    url: "http://victoria-metrics-victoria-metrics-single-server:8428/"
+  remoteWrite:
+    url: "http://victoria-metrics-victoria-metrics-single-server:8428/api/v1/write"
+  remoteRead:
+    url: "http://victoria-metrics-victoria-metrics-single-server:8428"
+  notifier:
+    url: "http://alertmanager.alertmanager:9093"
+  evaluationInterval: "30s"
+  selectAllByDefault: true
