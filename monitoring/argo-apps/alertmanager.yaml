@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: alertmanager
+  namespace: argocd
+spec:
+  project: monitoring
+  sources:
+    - repoURL: https://github.com/Utwo/k8s-playground
+      path: monitoring/alertmanager
+      targetRevision: HEAD
+      ref: myRepo # repo is available via symlink "myRepo"
+    - repoURL: https://prometheus-community.github.io/helm-charts
+      targetRevision: 1.13.1
+      chart: alertmanager
+      helm:
+        valueFiles:
+          - $myRepo/monitoring/alertmanager/helm-chart-values/values.yaml
+  destination:
+    namespace: alertmanager
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    automated: {}
+    syncOptions:
+      - CreateNamespace=true

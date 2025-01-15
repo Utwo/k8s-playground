@@ -1,0 +1,50 @@
+# This is needed for pagerduty integration
+# extraSecretMounts:
+#   - name: secret-files
+#     mountPath: /etc/secrets
+#     subPath: ""
+#     secretName: alertmanager-secrets
+#     readOnly: true
+
+config:
+  global:
+    resolve_timeout: 5m
+
+  route:
+    group_by:
+      - cluster
+    receiver: default-receiver
+    group_interval: 5m
+    routes:
+      - receiver: "null"
+        matchers:
+          - alertname =~ "InfoInhibitor|Watchdog"
+  receivers:
+    - name: "null"
+    - name: default-receiver
+      # Example pagerduty config
+      # pagerduty_configs:
+      #   - routing_key_file: /etc/secrets/pagerduty-integration-key
+      #     severity: "{{ if .CommonLabels.severity }}{{ .CommonLabels.severity | toLower}}{{ else }}critical{{ end }}"
+
+  inhibit_rules:
+    - equal:
+        - namespace
+        - alertname
+      source_matchers:
+        - severity = critical
+      target_matchers:
+        - severity =~ "warning|info"
+    - equal:
+        - namespace
+        - alertname
+      source_matchers:
+        - severity = warning
+      target_matchers:
+        - severity = info
+    - equal:
+        - namespace
+      source_matchers:
+        - alertname = InfoInhibitor
+      target_matchers:
+        - severity = info
