@@ -4,8 +4,6 @@ metadata:
   name: playground-sandbox
   namespace: argocd
 spec:
-  goTemplate: true
-  goTemplateOptions: ["missingkey=error"]
   project: apps
   sources:
     - repoURL: https://github.com/Utwo/playground-sandbox
@@ -14,9 +12,9 @@ spec:
       helm:
         parameters:
           - name: backend.image.tag
-            value: "{{ .head_sha }}"
+            value: $ARGOCD_APP_REVISION
           - name: frontend.image.tag
-            value: "{{ .head_sha }}"
+            value: $ARGOCD_APP_REVISION
           - name: ingress.className
             value: "nginx"
   destination:
