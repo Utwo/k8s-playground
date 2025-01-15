@@ -34,7 +34,7 @@ spec:
             ignoreMissingValueFiles: true
             valueFiles:
               - $myRepo/monitoring/kube-prometheus-stack/helm-chart-values/clusters/all/values.yaml
-              - $myRepo/monitoring/kube-prometheus-stack/helm-chart-values/clusters/{{.name}}/values.yaml
+              - $myRepo/monitoring/kube-prometheus-stack/helm-chart-values/clusters/{{.values.clusterName}}/values.yaml
             parameters:
               - name: "prometheus.prometheusSpec.externalLabels.cluster"
                 value: "{{.values.clusterName}}"
