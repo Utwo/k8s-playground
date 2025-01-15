@@ -21,6 +21,6 @@ spec:
     name: k3d-apps
     namespace: playground-sandbox
   syncPolicy:
-    # automated: {}
+    automated: {}
     syncOptions:
       - CreateNamespace=true
