@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: grafana
+  namespace: argocd
+spec:
+  project: monitoring
+  sources:
+    - repoURL: https://github.com/Utwo/k8s-playground
+      path: monitoring/grafana
+      targetRevision: HEAD
+      ref: myRepo # repo is available via symlink "myRepo"
+    - repoURL: https://grafana.github.io/helm-charts
+      targetRevision: 8.8.2
+      chart: grafana
+      helm:
+        valueFiles:
+          - $myRepo/monitoring/grafana/helm-chart-values/values.yaml
+  destination:
+    namespace: grafana
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    automated: {}
+    syncOptions:
+      - CreateNamespace=true
