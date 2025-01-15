@@ -1,0 +1,42 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: kubernetes-event-exporter
+  namespace: argocd
+spec:
+  goTemplate: true
+  generators:
+    - clusters:
+        selector:
+          matchLabels:
+            logging: "true"
+        values:
+          clusterName: "{{.name}}"
+    - list:
+        elements:
+          - name: in-cluster
+            values:
+              clusterName: control
+  template:
+    metadata:
+      name: "kubernetes-event-exporter-{{.values.clusterName}}"
+    spec:
+      project: monitoring
+      sources:
+        - repoURL: registry-1.docker.io/bitnamicharts
+          targetRevision: 3.3.1
+          chart: kubernetes-event-exporter
+          helm:
+            valuesObject:
+              config:
+                logFormat: json
+                logLevel: info
+                receivers:
+                  - name: "dump"
+                    stdout: {}
+      destination:
+        name: "{{.name}}"
+        namespace: "kubernetes-event-exporter"
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
