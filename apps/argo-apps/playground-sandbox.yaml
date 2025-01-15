@@ -4,34 +4,25 @@ metadata:
   name: playground-sandbox
   namespace: argocd
 spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
   project: apps
   sources:
-    - repoURL: https://github.com/Utwo/sandbox-playground
-      path: ./k8s/overlays/local
+    - repoURL: https://github.com/Utwo/playground-sandbox
+      path: ./k8s/playground-sandbox
       targetRevision: HEAD
-      kustomize:
-        images:
-          - app:latest
-          - playground-sandbox-fr:latest
-        patches:
-          - target:
-              kind: RoleBinding
-              name: modify-pods-to-sa
-            patch: |-
-              - op: replace
-                path: /subjects/0/namespace
-                value: playground-sandbox
-          - patch: |-
-              apiVersion: networking.k8s.io/v1
-              kind: Ingress
-              metadata:
-                name: app-ingress
-              spec:
-                ingressClassName: nginx
+      helm:
+        parameters:
+          - name: backend.image.tag
+            value: "{{ .head_sha }}"
+          - name: frontend.image.tag
+            value: "{{ .head_sha }}"
+          - name: ingress.className
+            value: "nginx"
   destination:
     name: k3d-apps
     namespace: playground-sandbox
   syncPolicy:
-    automated: {}
+    # automated: {}
     syncOptions:
       - CreateNamespace=true
