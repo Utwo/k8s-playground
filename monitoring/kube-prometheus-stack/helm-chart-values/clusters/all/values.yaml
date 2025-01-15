@@ -1,0 +1,45 @@
+fullnameOverride: "kube-prometheus-stack"
+
+defaultRules:
+  create: false
+
+grafana:
+  enabled: false
+kubeControllerManager:
+  enabled: false
+coreDns:
+  enabled: false
+kubeEtcd:
+  enabled: false
+kubeScheduler:
+  enabled: false
+alertmanager:
+  enabled: false
+
+prometheus-node-exporter:
+  fullnameOverride: node-exporter
+  kubeRBACProxy:
+    # We need kubeRBACProxy in front of node-exporter because the node-exporter daemonset expose a port public to the internet
+    # When enabled, creates a kube-rbac-proxy to protect the node-exporter http endpoint.
+    # The requests are served through the same service but requests are HTTPS.
+    enabled: true
+  prometheus:
+    monitor:
+      scheme: https
+      bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
+      tlsConfig:
+        insecureSkipVerify: true
+
+prometheus:
+  prometheusSpec:
+    replicaExternalLabelNameClear: true
+    prometheusExternalLabelNameClear: true
+    secrets:
+      - prometheus-auth
+    retention: 10m
+    remoteWrite:
+      - url: "https://metrics-collector.127.0.0.1.nip.io/api/v1/write"
+        authorization:
+          credentials:
+            key: AUTH_TOKEN
+            name: prometheus-auth

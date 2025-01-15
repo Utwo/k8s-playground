@@ -1,0 +1,47 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: kube-prometheus-stack
+  namespace: argocd
+spec:
+  goTemplate: true
+  generators:
+    - clusters:
+        selector:
+          matchLabels:
+            monitoring: "true"
+        values:
+          clusterName: "{{.name}}"
+    - list:
+        elements:
+          - name: in-cluster
+            values:
+              clusterName: control
+  template:
+    metadata:
+      name: "kube-prometheus-stack-{{.values.clusterName}}"
+    spec:
+      project: monitoring
+      sources:
+        - repoURL: https://github.com/Utwo/k8s-playground
+          path: monitoring/kube-prometheus-stack
+          targetRevision: HEAD
+          ref: myRepo # repo is available via symlink "myRepo"
+        - repoURL: https://prometheus-community.github.io/helm-charts
+          targetRevision: 68.1.0
+          chart: kube-prometheus-stack
+          helm:
+            ignoreMissingValueFiles: true
+            valueFiles:
+              - $myRepo/monitoring/kube-prometheus-stack/helm-chart-values/clusters/all/values.yaml
+              - $myRepo/monitoring/kube-prometheus-stack/helm-chart-values/clusters/{{.values.clusterName}}/values.yaml
+            parameters:
+              - name: "prometheus.prometheusSpec.externalLabels.cluster"
+                value: "{{.values.clusterName}}"
+      destination:
+        name: "{{.name}}"
+        namespace: kube-prometheus-stack
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
