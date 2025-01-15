@@ -12,9 +12,9 @@ spec:
       helm:
         parameters:
           - name: backend.image.tag
-            value: $ARGOCD_APP_REVISION
+            value: $ARGOCD_APP_REVISION_SHORT
           - name: frontend.image.tag
-            value: $ARGOCD_APP_REVISION
+            value: $ARGOCD_APP_REVISION_SHORT
           - name: ingress.className
             value: "nginx"
   destination:
