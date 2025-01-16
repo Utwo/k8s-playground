@@ -1,3 +1,3 @@
 clients:
-  - url: http://vlogs-vm-logs.victoria-metrics.svc.cluster.local:9428/insert/loki/api/v1/push
+  - url: http://vlogs-vm-logs.victoria-metrics.svc.cluster.local:9428/insert/loki/api/v1/push?_stream_fields=container,cluster,app,component,namespace,node_name,job
     tenant_id: "0:0"
