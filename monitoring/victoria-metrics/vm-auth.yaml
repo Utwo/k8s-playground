@@ -5,7 +5,4 @@ metadata:
 spec:
   ingress:
     class_name: nginx
-    hosts:
-      - name: metrics-collector.k3d-sandbox-control-serverlb.nip.io
-        path: /
-        port: http
+    host: metrics-collector.172.20.0.5.nip.io

@@ -23,8 +23,8 @@ spec:
         parameters:
           - name: fullnameOverride
             value: vm-operator
-          # - name: admissionWebhooks.certManager.enabled
-          #   value: "true"
+          - name: admissionWebhooks.certManager.enabled
+            value: "true"
           - name: "logLevel"
             value: "error"
           - name: "operator.enable_converter_ownership"
