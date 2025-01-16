@@ -8,3 +8,4 @@ spec:
     opentsdbHTTPListenAddr: ":4242"
     loggerLevel: WARN
     vmalert.proxyURL: "http://vmalert-alert-server:8080"
+  resources: {}

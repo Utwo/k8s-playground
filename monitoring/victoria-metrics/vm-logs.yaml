@@ -5,3 +5,8 @@ metadata:
 spec:
   removePvcAfterDelete: true
   retentionPeriod: 1d
+  storage:
+    resources:
+      requests:
+        storage: 1Gi
+  resources: {}
