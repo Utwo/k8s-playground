@@ -21,7 +21,7 @@ config:
 
   clients:
     - url: http://collector.172.20.0.5.nip.io/insert/loki/api/v1/push?_stream_fields=instance,job,host,app
-      tenant_id: "my_org"
+      tenant_id: "0:0"
       bearer_token: ${AUTH_TOKEN_LOGS}
 
 extraEnv:
