@@ -35,6 +35,9 @@ grafana.ini:
     # allowed_organizations:
     skip_org_role_sync: true
 
+plugins:
+  - https://github.com/VictoriaMetrics/victorialogs-datasource/releases/download/v0.13.1/victoriametrics-logs-datasource-v0.13.1.zip;victoriametrics-logs-datasource
+
 datasources:
   datasources.yaml:
     apiVersion: 1
