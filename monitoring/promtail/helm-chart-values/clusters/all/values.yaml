@@ -20,7 +20,7 @@ config:
   logLevel: warn
 
   clients:
-    - url: http://collector.172.20.0.5.nip.io/insert/loki/api/v1/push?_stream_fields=instance,job,host,app
+    - url: http://collector.172.20.0.5.nip.io/insert/loki/api/v1/push
       tenant_id: "0:0"
       bearer_token: ${AUTH_TOKEN_LOGS}
 

@@ -34,6 +34,8 @@ grafana.ini:
     client_secret: ${github-client-secret}
     # allowed_organizations:
     skip_org_role_sync: true
+  plugins:
+    allow_loading_unsigned_plugins: victoriametrics-logs-datasource
 
 plugins:
   - https://github.com/VictoriaMetrics/victorialogs-datasource/releases/download/v0.13.1/victoriametrics-logs-datasource-v0.13.1.zip;victoriametrics-logs-datasource
