@@ -49,7 +49,7 @@ datasources:
       - name: victoriametrics
         type: prometheus
         orgId: 1
-        url: http://victoria-metrics-victoria-metrics-single-server.victoria-metrics.svc.cluster.local:8428
+        url: http://vm-single-server.victoria-metrics.svc.cluster.local:8428
         access: proxy
         isDefault: true
         updateIntervalSeconds: 10

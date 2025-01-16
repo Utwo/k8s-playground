@@ -21,6 +21,7 @@ spec:
       chart: victoria-metrics-auth
       helm:
         valuesObject:
+          fullnameOverride: vm-auth
           config:
             users:
               - bearer_token: "%{AUTH_TOKEN}"
@@ -45,6 +46,8 @@ spec:
       chart: victoria-metrics-operator
       helm:
         parameters:
+          - name: fullnameOverride
+            value: vm-operator
           - name: "logLevel"
             value: "error"
           - name: "operator.enable_converter_ownership"
@@ -59,3 +62,16 @@ spec:
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
+      - RespectIgnoreDifferences=true
+  ignoreDifferences:
+    - group: ""
+      kind: Secret
+      name: vm-operator-validation
+      namespace: victoria-metrics
+      jsonPointers:
+        - /data
+    - group: admissionregistration.k8s.io
+      kind: ValidatingWebhookConfiguration
+      name: vm-operator-admission
+      jqPathExpressions:
+        - ".webhooks[]?.clientConfig.caBundle"

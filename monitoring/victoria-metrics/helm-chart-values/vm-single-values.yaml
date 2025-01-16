@@ -1,3 +1,5 @@
+fullnameOverride: vm-single
+
 server:
   retentionPeriod: 1d
   extraArgs:

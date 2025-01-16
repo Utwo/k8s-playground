@@ -7,11 +7,11 @@ spec:
   extraArgs:
     remoteWrite.disablePathAppend: "true"
   datasource:
-    url: "http://victoria-metrics-victoria-metrics-single-server:8428/"
+    url: "http://vm-victoria-metrics-single-server:8428/"
   remoteWrite:
-    url: "http://victoria-metrics-victoria-metrics-single-server:8428/api/v1/write"
+    url: "http://vm-victoria-metrics-single-server:8428/api/v1/write"
   remoteRead:
-    url: "http://victoria-metrics-victoria-metrics-single-server:8428"
+    url: "http://vm-victoria-metrics-single-server:8428"
   notifier:
     url: "http://alertmanager.alertmanager:9093"
   evaluationInterval: "30s"
