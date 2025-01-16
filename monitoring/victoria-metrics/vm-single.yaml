@@ -1,0 +1,10 @@
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMSingle
+metadata:
+  name: vm-single
+spec:
+  retentionPeriod: 1d
+  extraArgs:
+    opentsdbHTTPListenAddr: ":4242"
+    loggerLevel: WARN
+    vmalert.proxyURL: "http://vmalert-alert-server:8080"

@@ -11,12 +11,6 @@ spec:
       targetRevision: HEAD
       ref: myRepo
     - repoURL: https://victoriametrics.github.io/helm-charts
-      targetRevision: 0.13.5
-      chart: victoria-metrics-single
-      helm:
-        valueFiles:
-          - $myRepo/monitoring/victoria-metrics/helm-chart-values/vm-single-values.yaml
-    - repoURL: https://victoriametrics.github.io/helm-charts
       targetRevision: 0.40.4
       chart: victoria-metrics-operator
       helm:
