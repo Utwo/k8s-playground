@@ -16,7 +16,7 @@ spec:
         elements:
           - name: in-cluster
             values:
-              clusterName: control
+              clusterName: k3d-control
   template:
     metadata:
       name: "ingress-nginx-{{.values.clusterName}}"

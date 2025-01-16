@@ -16,7 +16,7 @@ spec:
         elements:
           - name: in-cluster
             values:
-              clusterName: control
+              clusterName: k3d-control
   template:
     metadata:
       name: "kube-prometheus-stack-{{.values.clusterName}}"
