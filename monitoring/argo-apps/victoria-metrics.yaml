@@ -23,7 +23,7 @@ spec:
         valuesObject:
           config:
             users:
-              - bearer_token: \%{AUTH_TOKEN}
+              - bearer_token: "%{AUTH_TOKEN}"
                 url_prefix: "http://victoria-metrics-victoria-metrics-single-server:8428"
                 headers:
                   - "X-Scope-OrgID: my-org"
@@ -37,7 +37,7 @@ spec:
             enabled: true
             ingressClassName: nginx
             hosts:
-              - name: metrics-collector.188.27.132.167.nip.io
+              - name: metrics-collector.172.20.0.5.nip.io
                 path: /
                 port: http
     - repoURL: https://victoriametrics.github.io/helm-charts
