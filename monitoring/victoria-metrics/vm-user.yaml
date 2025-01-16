@@ -5,7 +5,7 @@ metadata:
 spec:
   targetRefs:
     - static:
-        url: http://vmsingle-server:8428
+        url: http://vmsingle-server:8429
   tokenRef:
     name: victoria-metrics-auth
     key: AUTH_TOKEN
