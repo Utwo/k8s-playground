@@ -32,8 +32,10 @@ spec:
           targetRevision: 6.16.6
           chart: promtail
           helm:
+            ignoreMissingValueFiles: true
             valueFiles:
-              - $myRepo/monitoring/promtail/helm-chart-values/values.yaml
+              - $myRepo/monitoring/promtail/helm-chart-values/clusters/all/values.yaml
+              - $myRepo/monitoring/promtail/helm-chart-values/clusters/{{.values.clusterName}}/values.yaml
             parameters:
               - name: "extraArgs[0]"
                 value: "-client.external-labels=cluster={{.values.clusterName}}"

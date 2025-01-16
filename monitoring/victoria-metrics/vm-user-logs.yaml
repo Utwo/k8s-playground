@@ -5,7 +5,7 @@ metadata:
 spec:
   targetRefs:
     - static:
-        url: http://vmlogs-server:8429
+        url: http://vlogs-vm-logs:9428
   tokenRef:
     name: victoria-metrics-auth
     key: AUTH_TOKEN_LOGS

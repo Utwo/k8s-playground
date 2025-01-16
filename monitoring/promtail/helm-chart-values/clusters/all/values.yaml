@@ -20,12 +20,9 @@ config:
   logLevel: warn
 
   clients:
-    - url: http://victorialogs.victoria-metrics.svc.cluster.local:9428/insert/loki/api/v1/push?_stream_fields=instance,job,host,app
+    - url: http://collector.172.20.0.5.nip.io/insert/loki/api/v1/push?_stream_fields=instance,job,host,app
       tenant_id: "my_org"
-      # bearer_token: <secret>
-      basic_auth:
-        username: admin
-        password: ${AUTH_TOKEN_LOGS}
+      bearer_token: ${AUTH_TOKEN_LOGS}
 
 extraEnv:
   - name: AUTH_TOKEN_LOGS

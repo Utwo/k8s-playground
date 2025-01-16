@@ -57,8 +57,7 @@ datasources:
       - name: VictoriaLogs
         type: victoriametrics-logs-datasource
         access: proxy
-        url: http://victorialogs.victoria-metrics.svc.cluster.local:9428
-        isDefault: true
+        url: http://vlogs-vm-logs.victoria-metrics.svc.cluster.local:9428
       - name: Tempo
         type: tempo
         orgId: 1

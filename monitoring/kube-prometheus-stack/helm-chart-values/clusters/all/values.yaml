@@ -38,7 +38,7 @@ prometheus:
       - prometheus-auth
     retention: 10m
     remoteWrite:
-      - url: "http://metrics-collector.172.20.0.5.nip.io/api/v1/write"
+      - url: "http://collector.172.20.0.5.nip.io/api/v1/write"
         authorization:
           credentials:
             key: AUTH_TOKEN
