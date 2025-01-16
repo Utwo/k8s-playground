@@ -4,6 +4,7 @@ metadata:
   name: ingress-nginx
   namespace: argocd
 spec:
+  goTemplate: true
   generators:
     - clusters:
         selector:
@@ -18,7 +19,7 @@ spec:
               clusterName: control
   template:
     metadata:
-      name: "ingress-nginx-{{name}}"
+      name: "ingress-nginx-{{.values.clusterName}}"
     spec:
       project: infra
       source:
@@ -48,7 +49,7 @@ spec:
         targetRevision: 4.12.0
       destination:
         namespace: ingress-nginx
-        name: "{{name}}"
+        name: "{{.name}}"
       syncPolicy:
         automated: {}
         syncOptions:
