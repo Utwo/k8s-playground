@@ -9,3 +9,11 @@ grafana:
 
 defaultRules:
   create: true
+
+prometheus:
+  prometheusSpec:
+    replicaExternalLabelNameClear: true
+    prometheusExternalLabelNameClear: true
+    retention: 10m
+    remoteWrite:
+      - url: "http://victoria-metrics-victoria-metrics-single-server.victoria-metrics.svc.cluster.local:8428/api/v1/write"
