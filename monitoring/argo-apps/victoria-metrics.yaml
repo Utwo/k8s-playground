@@ -37,7 +37,7 @@ spec:
             enabled: true
             ingressClassName: nginx
             hosts:
-              - name: metrics-collector.172.20.0.5.nip.io
+              - name: metrics-collector.k3d-sandbox-control-serverlb.nip.io
                 path: /
                 port: http
     - repoURL: https://victoriametrics.github.io/helm-charts
