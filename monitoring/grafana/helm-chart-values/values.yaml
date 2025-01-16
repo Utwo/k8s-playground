@@ -9,12 +9,14 @@ sidecar:
     enabled: true
     searchNamespace:
       - victoria-metrics
+      - kube-prometheus-stack
   dashboards:
     enabled: true
     provider:
       folder: k8s
     searchNamespace:
       - victoria-metrics
+      - kube-prometheus-stack
 
 grafana.ini:
   server:
