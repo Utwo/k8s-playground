@@ -1,0 +1,11 @@
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMAuth
+metadata:
+  name: vm-auth
+spec:
+  ingress:
+    class_name: nginx
+    hosts:
+      - name: metrics-collector.k3d-sandbox-control-serverlb.nip.io
+        path: /
+        port: http
