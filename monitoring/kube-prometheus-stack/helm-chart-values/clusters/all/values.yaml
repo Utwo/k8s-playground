@@ -1,5 +1,7 @@
 fullnameOverride: "kube-prometheus-stack"
 
+cleanPrometheusOperatorObjectNames: true
+
 defaultRules:
   create: false
 
@@ -31,6 +33,7 @@ prometheus-node-exporter:
         insecureSkipVerify: true
 
 prometheus:
+  agentMode: true
   prometheusSpec:
     replicaExternalLabelNameClear: true
     prometheusExternalLabelNameClear: true

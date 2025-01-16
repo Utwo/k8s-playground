@@ -17,3 +17,4 @@ prometheus:
     retention: 10m
     remoteWrite:
       - url: "http://vmsingle-server.victoria-metrics.svc.cluster.local:8429/api/v1/write"
+    remoteWriteDashboards: true
