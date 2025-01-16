@@ -54,6 +54,11 @@ datasources:
         isDefault: true
         updateIntervalSeconds: 10
         editable: true
+      - name: VictoriaLogs
+        type: victoriametrics-logs-datasource
+        access: proxy
+        url: http://victorialogs.victoria-metrics.svc.cluster.local:9428
+        isDefault: true
       - name: Tempo
         type: tempo
         orgId: 1

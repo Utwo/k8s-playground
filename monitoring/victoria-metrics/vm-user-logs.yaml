@@ -1,11 +1,11 @@
 apiVersion: operator.victoriametrics.com/v1beta1
 kind: VMUser
 metadata:
-  name: vm-user-bearer-token
+  name: vm-user-logs
 spec:
   targetRefs:
     - static:
-        url: http://vmsingle-server:8429
+        url: http://vmlogs-server:8429
   tokenRef:
     name: victoria-metrics-auth
-    key: AUTH_TOKEN
+    key: AUTH_TOKEN_LOGS

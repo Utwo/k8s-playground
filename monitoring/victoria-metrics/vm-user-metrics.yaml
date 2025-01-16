@@ -1,0 +1,11 @@
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMUser
+metadata:
+  name: vm-user-metrics
+spec:
+  targetRefs:
+    - static:
+        url: http://vmsingle-server:8429
+  tokenRef:
+    name: victoria-metrics-auth
+    key: AUTH_TOKEN_METRICS

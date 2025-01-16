@@ -1,0 +1,48 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: promtail
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=invalid"]
+  generators:
+    - clusters:
+        selector:
+          matchLabels:
+            logging: "true"
+        values:
+          clusterName: "{{.name}}"
+    - list:
+        elements:
+          - name: in-cluster
+            values:
+              clusterName: control
+  template:
+    metadata:
+      name: "promtail-{{.values.clusterName}}"
+    spec:
+      project: monitoring
+      sources:
+        - repoURL: https://github.com/Utwo/k8s-playground
+          path: monitoring/promtail
+          targetRevision: HEAD
+          ref: myRepo # repo is available via symlink "myRepo"
+        - repoURL: https://grafana.github.io/helm-charts
+          targetRevision: 6.16.6
+          chart: promtail
+          helm:
+            valueFiles:
+              - $myRepo/monitoring/promtail/helm-chart-values/values.yaml
+            parameters:
+              - name: "extraArgs[0]"
+                value: "-client.external-labels=cluster={{.values.clusterName}}"
+              - name: "extraArgs[1]"
+                value: "-config.expand-env=true"
+      destination:
+        name: "{{.name}}"
+        namespace: "promtail"
+      syncPolicy:
+        automated: {}
+        syncOptions:
+          - CreateNamespace=true
