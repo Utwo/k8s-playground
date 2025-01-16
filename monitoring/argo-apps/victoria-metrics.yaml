@@ -25,7 +25,7 @@ spec:
           config:
             users:
               - bearer_token: "%{AUTH_TOKEN}"
-                url_prefix: "http://victoria-metrics-victoria-metrics-single-server:8428"
+                url_prefix: "http://vm-single-server:8428"
                 headers:
                   - "X-Scope-OrgID: my-org"
           env:
@@ -38,7 +38,7 @@ spec:
             enabled: true
             ingressClassName: nginx
             hosts:
-              - name: metrics-collector.k3d-sandbox-control-serverlb.nip.io
+              - name: metrics-collector.172.20.0.5.nip.io
                 path: /
                 port: http
     - repoURL: https://victoriametrics.github.io/helm-charts
@@ -48,6 +48,8 @@ spec:
         parameters:
           - name: fullnameOverride
             value: vm-operator
+          - name: admissionWebhooks.certManager.enabled
+            value: "true"
           - name: "logLevel"
             value: "error"
           - name: "operator.enable_converter_ownership"
@@ -62,16 +64,3 @@ spec:
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
-      - RespectIgnoreDifferences=true
-  ignoreDifferences:
-    - group: ""
-      kind: Secret
-      name: vm-operator-validation
-      namespace: victoria-metrics
-      jsonPointers:
-        - /data
-    - group: admissionregistration.k8s.io
-      kind: ValidatingWebhookConfiguration
-      name: vm-operator-admission
-      jqPathExpressions:
-        - ".webhooks[]?.clientConfig.caBundle"
