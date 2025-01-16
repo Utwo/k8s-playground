@@ -18,6 +18,26 @@ sidecar:
       - victoria-metrics
       - kube-prometheus-stack
 
+dashboardProviders:
+  dashboardproviders.yaml:
+    apiVersion: 1
+    providers:
+      - name: "default"
+        orgId: 1
+        folder: "vm"
+        type: file
+        disableDeletion: false
+        editable: true
+        options:
+          path: /var/lib/grafana/dashboards/default
+
+dashboards:
+  default:
+    VictoriaLogs:
+      gnetId: 22084
+      revision: 3
+      datasource: victoriametrics
+
 grafana.ini:
   server:
     root_url: https://metrics.127.0.0.1.nip.io
