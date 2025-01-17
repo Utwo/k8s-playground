@@ -1,8 +1,7 @@
-# https://github.com/argoproj/argo-cd/blob/master/examples/dashboard.json
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: grafana-dashboard
+  name: argocd-dashboard
   labels:
     grafana_dashboard: "1"
   annotations:

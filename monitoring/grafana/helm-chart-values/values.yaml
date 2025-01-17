@@ -18,7 +18,9 @@ sidecar:
     searchNamespace:
       - grafana
       - victoria-metrics
+      - tempo
       - kube-prometheus-stack
+      - argocd
 
 dashboardProviders:
   dashboardproviders.yaml:
@@ -93,7 +95,7 @@ datasources:
       - name: Tempo
         type: tempo
         orgId: 1
-        url: "http://tempo-query-frontend.tempo.svc.cluster.local:3100"
+        url: "http://tempo.tempo.svc.cluster.local:3100"
         access: proxy
         jsonData:
           nodeGraph:

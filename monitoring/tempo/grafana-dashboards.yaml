@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: grafana-dashboards
+  name: tempo-dashboards
   labels:
     grafana_dashboard: "1"
   annotations:
