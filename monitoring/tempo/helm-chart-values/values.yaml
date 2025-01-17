@@ -1,0 +1,8 @@
+serviceMonitor:
+  enabled: true
+  labels:
+    release: kube-prometheus-stack-k3d-control
+
+metricsGenerator:
+  enabled: true
+  remoteWriteUrl: "http://vmsingle-server.victoria-metrics.svc.cluster.local:8429/api/v1/write"

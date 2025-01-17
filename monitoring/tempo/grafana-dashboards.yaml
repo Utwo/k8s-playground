@@ -1,0 +1,18 @@
+# https://github.com/grafana/tempo/tree/main/operations/tempo-mixin-compiled/dashboards
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-dashboards
+  labels:
+    grafana_dashboard: "1"
+  annotations:
+    grafana_folder: "tempo"
+data:
+  tempo-resources.json: |
+    {{ .Files.Get "dashboards/tempo-resources.json" | indent 4 }}
+  tempo-writes.json: |
+    {{ .Files.Get "dashboards/tempo-writes.json" | indent 4 }}
+  tempo-reads.json: |
+    {{ .Files.Get "dashboards/tempo-reads.json" | indent 4 }}
+  tempo-operational.json: |
+    {{ .Files.Get "dashboards/tempo-operational.json" | indent 4 }}

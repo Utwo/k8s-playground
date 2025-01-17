@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tempo
+  namespace: argocd
+spec:
+  project: monitoring
+  sources:
+    - repoURL: https://github.com/Utwo/k8s-playground
+      path: monitoring/tempo
+      targetRevision: HEAD
+      ref: myRepo # repo is available via symlink "myRepo"
+    - repoURL: https://grafana.github.io/helm-charts
+      targetRevision: 1.18.0
+      chart: tempo
+      helm:
+        valueFiles:
+          - $myRepo/monitoring/tempo/helm-chart-values/values.yaml
+  destination:
+    namespace: tempo
+    name: in-cluster
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
