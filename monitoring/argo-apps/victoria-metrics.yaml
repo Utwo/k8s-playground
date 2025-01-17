@@ -14,19 +14,14 @@ spec:
       targetRevision: 0.40.4
       chart: victoria-metrics-operator
       helm:
-        parameters:
-          - name: fullnameOverride
-            value: vm-operator
-          - name: admissionWebhooks.certManager.enabled
-            value: "true"
-          - name: "logLevel"
-            value: "error"
-          - name: "operator.enable_converter_ownership"
-            value: "true"
-          - name: "watchNamespaces[0]"
-            value: "victoria-metrics"
-          - name: "watchNamespaces[1]"
-            value: "kube-prometheus-extra"
+        valuesObject:
+          fullnameOverride: vm-operator
+          logLevel: error
+          admissionWebhooks:
+            certManager:
+              enabled: true
+          operator:
+            enable_converter_ownership: true
   destination:
     namespace: victoria-metrics
     name: in-cluster
