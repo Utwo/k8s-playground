@@ -10,6 +10,8 @@ spec:
       path: monitoring/victoria-metrics
       targetRevision: HEAD
       ref: myRepo
+      directory:
+        recurse: true
     - repoURL: https://victoriametrics.github.io/helm-charts
       targetRevision: 0.40.4
       chart: victoria-metrics-operator
@@ -22,6 +24,8 @@ spec:
               enabled: true
           operator:
             enable_converter_ownership: true
+          watchNamespaces:
+            - victoria-metrics
   destination:
     namespace: victoria-metrics
     name: in-cluster
