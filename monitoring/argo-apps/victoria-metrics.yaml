@@ -24,8 +24,6 @@ spec:
               enabled: true
           operator:
             enable_converter_ownership: true
-          watchNamespaces:
-            - victoria-metrics
   destination:
     namespace: victoria-metrics
     name: in-cluster
