@@ -1,0 +1,17 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    release: kube-prometheus-stack-k3d-control
+  name: alertmanager
+spec:
+  endpoints:
+    - interval: 30s
+      port: metrics
+  namespaceSelector:
+    matchNames:
+      - alertmanager
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: alertmanager
+      app.kubernetes.io/name: alertmanager
