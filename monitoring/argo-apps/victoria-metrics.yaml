@@ -19,6 +19,17 @@ spec:
         valuesObject:
           fullnameOverride: vm-operator
           logLevel: error
+          env:
+            - name: VM_ENABLEDPROMETHEUSCONVERTER_PODMONITOR
+              value: "false"
+            - name: VM_ENABLEDPROMETHEUSCONVERTER_SERVICESCRAPE
+              value: "false"
+            - name: VM_ENABLEDPROMETHEUSCONVERTER_PROMETHEUSRULE
+              value: "true"
+            - name: VM_ENABLEDPROMETHEUSCONVERTER_PROBE
+              value: "false"
+            - name: VM_ENABLEDPROMETHEUSCONVERTER_SCRAPECONFIG
+              value: "false"
           admissionWebhooks:
             certManager:
               enabled: true
