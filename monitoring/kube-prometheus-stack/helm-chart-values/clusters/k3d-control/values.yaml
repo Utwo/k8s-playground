@@ -7,6 +7,9 @@ grafana:
         global:
           enabled: true
 
+alertmanager:
+  forceDeployDashboards: true
+
 defaultRules:
   create: true
 
