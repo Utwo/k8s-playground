@@ -15,6 +15,7 @@ sidecar:
     provider:
       folder: k8s
     searchNamespace:
+      - grafana
       - victoria-metrics
       - kube-prometheus-stack
 
@@ -24,15 +25,31 @@ dashboardProviders:
     providers:
       - name: "default"
         orgId: 1
-        folder: "vm"
+        folder: "default"
         type: file
         disableDeletion: false
         editable: true
         options:
           path: /var/lib/grafana/dashboards/default
+      - name: "vm"
+        orgId: 1
+        folder: "vm"
+        type: file
+        disableDeletion: false
+        editable: true
+        options:
+          path: /var/lib/grafana/dashboards/vm
+      - name: "nginx"
+        orgId: 1
+        folder: "nginx"
+        type: file
+        disableDeletion: false
+        editable: true
+        options:
+          path: /var/lib/grafana/dashboards/nginx
 
 dashboards:
-  default:
+  vm:
     VictoriaLogs:
       gnetId: 22084
       revision: 3
