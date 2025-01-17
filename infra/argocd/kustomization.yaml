@@ -10,7 +10,11 @@ resources:
   - ingress.yaml
   - argocd-secrets.yaml
   - clusters/k3d-apps-secret.yaml
-  - grafana-dashboard.yaml
+  # metrics
+  - metrics/argocd-metrics.yaml
+  - metrics/argocd-repo-server-metrics.yaml
+  - metrics/argocd-server-metrics.yaml
+  - metrics/grafana-dashboard.yaml
   # - repo-secret.yaml
 
 patches:
