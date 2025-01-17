@@ -12,6 +12,7 @@ sidecar:
       - kube-prometheus-stack
   dashboards:
     enabled: true
+    folderAnnotation: grafana_folder
     provider:
       folder: k8s
     searchNamespace:
@@ -39,14 +40,6 @@ dashboardProviders:
         editable: true
         options:
           path: /var/lib/grafana/dashboards/vm
-      - name: "nginx"
-        orgId: 1
-        folder: "nginx"
-        type: file
-        disableDeletion: false
-        editable: true
-        options:
-          path: /var/lib/grafana/dashboards/nginx
 
 dashboards:
   vm:
