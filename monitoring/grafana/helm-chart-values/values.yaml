@@ -36,11 +36,12 @@ dashboards:
     VictoriaLogs:
       gnetId: 22084
       revision: 3
-      datasource: victoriametrics
     VMAlerts:
       gnetId: 14950
       revision: 13
-      datasource: victoriametrics
+    VMSingle:
+      gnetId: 10229
+      revision: 37
 
 grafana.ini:
   server:
