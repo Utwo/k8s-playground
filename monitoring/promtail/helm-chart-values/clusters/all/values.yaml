@@ -20,7 +20,7 @@ config:
   logLevel: warn
 
   clients:
-    - url: http://collector.172.20.0.5.nip.io/insert/loki/api/v1/push?_stream_fields=container,cluster,app,component,namespace,node_name,job&ignore_fields=pod,filename
+    - url: http://collector.172.20.0.2.nip.io/insert/loki/api/v1/push?_stream_fields=container,cluster,app,component,namespace,node_name,job&ignore_fields=pod,filename
       tenant_id: "0:0"
       bearer_token: ${AUTH_TOKEN_LOGS}
 
