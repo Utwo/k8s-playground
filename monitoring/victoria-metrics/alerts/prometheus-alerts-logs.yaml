@@ -4,7 +4,7 @@ metadata:
   name: vm-logs-alerts
 spec:
   groups:
-    - name: vlogs
+    - name: vmlogs
       interval: 30s
       rules:
         - alert: DiskRunsOutOfSpace

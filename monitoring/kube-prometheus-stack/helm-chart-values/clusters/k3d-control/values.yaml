@@ -14,6 +14,7 @@ defaultRules:
   create: true
 
 prometheus:
+  agentMode: false
   prometheusSpec:
     replicaExternalLabelNameClear: true
     prometheusExternalLabelNameClear: true
