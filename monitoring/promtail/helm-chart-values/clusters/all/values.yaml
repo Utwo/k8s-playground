@@ -20,13 +20,15 @@ config:
   logLevel: warn
 
   clients:
-    - url: http://collector.172.20.0.4.nip.io/insert/loki/api/v1/push?_stream_fields=container,cluster,app,component,namespace,node_name,job&ignore_fields=pod,filename
-      tenant_id: "0:0"
-      bearer_token: ${AUTH_TOKEN_LOGS}
+    - url: http://loki.172.20.0.3.nip.io/loki/api/v1/push
+      tenant_id: "my_org"
+      basic_auth:
+        username: admin
+        password: ${LOKI_PASSWORD}
 
 extraEnv:
-  - name: AUTH_TOKEN_LOGS
+  - name: LOKI_PASSWORD
     valueFrom:
       secretKeyRef:
         name: promtail-secret
-        key: AUTH_TOKEN_LOGS
+        key: LOKI_PASSWORD

@@ -80,6 +80,20 @@ datasources:
         isDefault: true
         updateIntervalSeconds: 10
         editable: true
+      - name: loki
+        type: loki
+        orgId: 1
+        url: http://loki-gateway.loki.svc.cluster.local
+        access: proxy
+        updateIntervalSeconds: 10
+        editable: true
+        basicAuth: true
+        basicAuthUser: admin
+        jsonData:
+          httpHeaderName1: "X-Scope-OrgID"
+        secureJsonData:
+          httpHeaderValue1: "my_org"
+          basicAuthPassword: ${loki-password}
       - name: Tempo
         type: tempo
         orgId: 1

@@ -1,0 +1,49 @@
+deploymentMode: SingleBinary
+
+gateway:
+  basicAuth:
+    enabled: true
+    existingSecret: loki-secret
+  ingress:
+    enabled: true
+    ingressClassName: "nginx"
+    hosts:
+      - host: loki.172.20.0.3.nip.io
+        paths:
+          - path: /
+            pathType: Prefix
+    tls: []
+
+minio:
+  enabled: true
+
+lokiCanary:
+  enabled: false
+
+test:
+  enabled: false
+
+loki:
+  commonConfig:
+    replication_factor: 1
+  schemaConfig:
+    configs:
+      - from: "2024-04-01"
+        store: tsdb
+        object_store: s3
+        schema: v13
+        index:
+          prefix: index_
+          period: 24h
+  pattern_ingester:
+    enabled: true
+  limits_config:
+    retention_period: 1d
+
+resultsCache:
+  resources:
+    requests:
+
+chunksCache:
+  resources:
+    requests:

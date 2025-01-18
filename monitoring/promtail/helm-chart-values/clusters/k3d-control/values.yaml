@@ -1,4 +1,7 @@
 config:
   clients:
-    - url: http://vlogs-vm-logs.victoria-metrics.svc.cluster.local:9428/insert/loki/api/v1/push?_stream_fields=container,cluster,app,component,namespace,node_name,job&ignore_fields=pod,filename
-      tenant_id: "0:0"
+    - url: http://loki-gateway.loki.svc.cluster.local/loki/api/v1/push
+      tenant_id: "my_org"
+      basic_auth:
+        username: admin
+        password: ${LOKI_PASSWORD}
