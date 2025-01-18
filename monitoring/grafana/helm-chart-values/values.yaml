@@ -37,9 +37,6 @@ dashboardProviders:
 
 dashboards:
   vm:
-    VictoriaLogs:
-      gnetId: 22084
-      revision: 3
     VMAlerts:
       gnetId: 14950
       revision: 13
@@ -63,11 +60,6 @@ grafana.ini:
     client_secret: ${github-client-secret}
     # allowed_organizations:
     skip_org_role_sync: true
-  plugins:
-    allow_loading_unsigned_plugins: victoriametrics-logs-datasource
-
-plugins:
-  - https://github.com/VictoriaMetrics/victorialogs-datasource/releases/download/v0.13.1/victoriametrics-logs-datasource-v0.13.1.zip;victoriametrics-logs-datasource
 
 datasources:
   datasources.yaml:
@@ -88,10 +80,6 @@ datasources:
         isDefault: true
         updateIntervalSeconds: 10
         editable: true
-      - name: VictoriaLogs
-        type: victoriametrics-logs-datasource
-        access: proxy
-        url: http://vlogs-vm-logs.victoria-metrics.svc.cluster.local:9428
       - name: Tempo
         type: tempo
         orgId: 1
