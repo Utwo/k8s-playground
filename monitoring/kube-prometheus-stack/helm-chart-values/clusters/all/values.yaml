@@ -4,6 +4,9 @@ cleanPrometheusOperatorObjectNames: true
 
 defaultRules:
   create: false
+  disabled:
+    # TODO: https://github.com/prometheus/prometheus/issues/14349
+    PrometheusNotConnectedToAlertmanagers: true
 
 grafana:
   enabled: false
