@@ -1,6 +1,6 @@
 serviceMonitor:
   enabled: true
-  labels:
+  additionalLabels:
     release: kube-prometheus-stack-k3d-control
 
 metricsGenerator:
