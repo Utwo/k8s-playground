@@ -10,6 +10,8 @@ spec:
       path: monitoring/grafana
       targetRevision: HEAD
       ref: myRepo # repo is available via symlink "myRepo"
+      directory:
+        recurse: true
     - repoURL: https://grafana.github.io/helm-charts
       targetRevision: 8.8.2
       chart: grafana
