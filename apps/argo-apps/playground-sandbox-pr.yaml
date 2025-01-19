@@ -28,12 +28,6 @@ spec:
           path: k8s/playground-sandbox
           targetRevision: "{{.head_sha}}"
           helm:
-            valuesObject:
-              backend:
-                serviceMonitor:
-                  enabled: true
-                  additionalLabels:
-                    release: kube-prometheus-stack-k3d-apps
             parameters:
               - name: backend.image.tag
                 value: "pr-{{.number}}-{{.head_sha}}"
@@ -48,7 +42,21 @@ spec:
       destination:
         name: k3d-apps
         namespace: playground-sandbox-{{.branch_slug}}-{{.number}}
+      info:
+        - name: API URL
+          value: >-
+            "https://api.{{.branch_slug}}-{{.number}}.127.0.0.1.nip.io:8000"
+        - name: Webapp URL
+          value: >-
+            "https://{{.branch_slug}}-{{.number}}.127.0.0.1.nip.io:8000"
       syncPolicy:
-        automated: {}
+        automated:
+          prune: true
         syncOptions:
           - CreateNamespace=true
+        managedNamespaceMetadata:
+          labels:
+            app.kubernetes.io/instance: playground-sandbox-pr-{{.branch_slug}}-{{.number}}
+          annotations:
+            argocd.argoproj.io/tracking-id: >-
+              <argocd-application-name>:app/Namespace:<namespace>/<namespace>
