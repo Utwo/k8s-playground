@@ -15,6 +15,7 @@ sidecar:
     folderAnnotation: grafana_folder
     provider:
       folder: k8s
+      foldersFromFilesStructure: true
     searchNamespace:
       - grafana
       - victoria-metrics
