@@ -10,6 +10,12 @@ spec:
       path: ./k8s/playground-sandbox
       targetRevision: HEAD
       helm:
+        valuesObject:
+          backend:
+            serviceMonitor:
+              enabled: true
+              additionalLabels:
+                release: kube-prometheus-stack-k3d-apps
         parameters:
           - name: backend.image.tag
             value: $ARGOCD_APP_REVISION_SHORT
