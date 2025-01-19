@@ -43,12 +43,14 @@ spec:
                 value: "{{.branch_slug}}-{{.number}}"
               - name: ingress.className
                 value: "nginx"
+              - name: ingress.domain
+                value: "{{.branch_slug}}-{{.number}}.127.0.0.1.nip.io"
               - name: ingress.apiSubdomain
-                value: "api-pr-{{.branch_slug}}-{{.number}}"
+                value: "api"
               - name: ingress.projectSubdomain
-                value: "project-pr-{{.branch_slug}}-{{.number}}"
+                value: "project"
               - name: ingress.vscodeSubdomain
-                value: "vscode-pr-{{.branch_slug}}-{{.number}}"
+                value: "vscode"
       destination:
         name: k3d-apps
         namespace: playground-sandbox-{{.branch_slug}}-{{.number}}
