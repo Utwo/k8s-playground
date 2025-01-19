@@ -73,6 +73,7 @@ datasources:
           implementation: prometheus
           handleGrafanaManagedAlerts: true
       - name: victoriametrics
+        uid: PABDA7AB1AD2A1489
         type: prometheus
         orgId: 1
         url: http://vmsingle-server.victoria-metrics.svc.cluster.local:8429
@@ -81,6 +82,7 @@ datasources:
         updateIntervalSeconds: 10
         editable: true
       - name: loki
+        uid: P982945308D3682D1
         type: loki
         orgId: 1
         url: http://loki-gateway.loki.svc.cluster.local
@@ -104,6 +106,18 @@ datasources:
             enabled: true
           search:
             hide: false
+          tracesToLogsV2:
+            datasourceUid: "P982945308D3682D1"
+            spanStartTimeShift: "1h"
+            spanEndTimeShift: "-1h"
+          tracesToMetrics:
+            datasourceUid: "PABDA7AB1AD2A1489"
+            spanStartTimeShift: "1h"
+            spanEndTimeShift: "-1h"
+          serviceMap:
+            datasourceUid: "PABDA7AB1AD2A1489"
+          lokiSearch:
+            datasourceUid: "P982945308D3682D1"
 # alerting:
 #   contactpoints.yaml:
 #     apiVersion: 1
