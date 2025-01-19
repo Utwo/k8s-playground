@@ -8,7 +8,7 @@ gateway:
     enabled: true
     ingressClassName: "nginx"
     hosts:
-      - host: loki.172.20.0.3.nip.io
+      - host: loki.172.20.0.6.nip.io
         paths:
           - path: /
             pathType: Prefix
