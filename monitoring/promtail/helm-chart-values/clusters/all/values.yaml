@@ -17,6 +17,9 @@ config:
       - drop:
           source: "component"
           value: "runner"
+      - labeldrop:
+          - pod
+          - filename
   logLevel: warn
 
   clients:
