@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    release: kube-prometheus-stack-k3d-control
+  name: vmsingle-server
+spec:
+  endpoints:
+    - path: /metrics
+      port: http
+  selector:
+    matchExpressions:
+      - key: operator.victoriametrics.com/additional-service
+        operator: DoesNotExist
+    matchLabels:
+      app.kubernetes.io/component: monitoring
+      app.kubernetes.io/instance: server
+      app.kubernetes.io/name: vmsingle
+      managed-by: vm-operator

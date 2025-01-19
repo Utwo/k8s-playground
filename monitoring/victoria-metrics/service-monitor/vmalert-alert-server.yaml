@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    release: kube-prometheus-stack-k3d-control
+  name: vmalert-alert-server
+spec:
+  endpoints:
+    - path: /metrics
+      port: http
+  selector:
+    matchExpressions:
+      - key: operator.victoriametrics.com/additional-service
+        operator: DoesNotExist
+    matchLabels:
+      app.kubernetes.io/component: monitoring
+      app.kubernetes.io/instance: alert-server
+      app.kubernetes.io/name: vmalert
+      managed-by: vm-operator
