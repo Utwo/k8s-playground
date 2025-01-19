@@ -1,0 +1,58 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: playground-sandbox-pr
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - pullRequest:
+        github:
+          owner: utwo
+          repo: playground-sandbox
+          # tokenRef:
+          #   secretName: github-repo
+          #   key: password
+          # Labels is used to filter the PRs that you want to target. (optional)
+          labels:
+            - preview
+        requeueAfterSeconds: 30
+  template:
+    metadata:
+      name: "playground-sandbox-pr-{{.branch_slug}}-{{.number}}"
+    spec:
+      project: apps
+      sources:
+        - repoURL: https://github.com/Utwo/playground-sandbox
+          path: k8s/playground-sandbox
+          targetRevision: "{{.head_sha}}"
+          helm:
+            valuesObject:
+              backend:
+                serviceMonitor:
+                  enabled: true
+                  additionalLabels:
+                    release: kube-prometheus-stack-k3d-apps
+            parameters:
+              - name: backend.image.tag
+                value: "{{.head_sha}}"
+              - name: frontend.image.tag
+                value: "{{.head_sha}}"
+              - name: sandboxNamespace
+                value: "{{.branch_slug}}-{{.number}}"
+              - name: ingress.className
+                value: "nginx"
+              - name: ingress.apiSubdomain
+                value: "api-pr-{{.branch_slug}}-{{.number}}"
+              - name: ingress.projectSubdomain
+                value: "project-pr-{{.branch_slug}}-{{.number}}"
+              - name: ingress.vscodeSubdomain
+                value: "vscode-pr-{{.branch_slug}}-{{.number}}"
+      destination:
+        name: k3d-apps
+        namespace: playground-sandbox-{{.branch_slug}}-{{.number}}
+      syncPolicy:
+        automated: {}
+        syncOptions:
+          - CreateNamespace=true
