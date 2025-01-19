@@ -36,9 +36,9 @@ spec:
                     release: kube-prometheus-stack-k3d-apps
             parameters:
               - name: backend.image.tag
-                value: "{{.head_sha}}"
+                value: "pr-{{.number}}-{{.head_sha}}"
               - name: frontend.image.tag
-                value: "{{.head_sha}}"
+                value: "pr-{{.number}}-{{.head_sha}}"
               - name: sandboxNamespace
                 value: "{{.branch_slug}}-{{.number}}"
               - name: ingress.className

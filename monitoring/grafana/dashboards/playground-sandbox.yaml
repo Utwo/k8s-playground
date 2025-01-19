@@ -9,117 +9,159 @@ metadata:
 data:
   playground-sandbox.json: |
     {
-        "annotations": {
-            "list": [
-                {
-                    "builtIn": 1,
-                    "datasource": {
-                        "type": "grafana",
-                        "uid": "-- Grafana --"
-                    },
-                    "enable": true,
-                    "hide": true,
-                    "iconColor": "rgba(0, 211, 255, 1)",
-                    "name": "Annotations & Alerts",
-                    "type": "dashboard"
-                }
-            ]
-        },
-        "description": "Dashboard for playground sandbox application",
-        "editable": true,
-        "fiscalYearStartMonth": 0,
-        "graphTooltip": 0,
-        "id": 218,
-        "links": [],
-        "panels": [
+      "annotations": {
+        "list": [
+          {
+            "builtIn": 1,
+            "datasource": {
+              "type": "grafana",
+              "uid": "-- Grafana --"
+            },
+            "enable": true,
+            "hide": true,
+            "iconColor": "rgba(0, 211, 255, 1)",
+            "name": "Annotations & Alerts",
+            "type": "dashboard"
+          }
+        ]
+      },
+      "description": "Dashboard for playground sandbox application",
+      "editable": true,
+      "fiscalYearStartMonth": 0,
+      "graphTooltip": 0,
+      "id": 260,
+      "links": [],
+      "panels": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PABDA7AB1AD2A1489"
+          },
+          "description": "Number of running pods",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 0
+          },
+          "id": 1,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "percentChangeColorMode": "standard",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "textMode": "auto",
+            "wideLayout": true
+          },
+          "pluginVersion": "11.4.0",
+          "targets": [
             {
-                "datasource": {
-                    "type": "prometheus",
-                    "uid": "PABDA7AB1AD2A1489"
-                },
-                "description": "Number of running pods",
-                "fieldConfig": {
-                    "defaults": {
-                        "color": {
-                            "mode": "thresholds"
-                        },
-                        "mappings": [],
-                        "thresholds": {
-                            "mode": "absolute",
-                            "steps": [
-                                {
-                                    "color": "green",
-                                    "value": null
-                                },
-                                {
-                                    "color": "red",
-                                    "value": 80
-                                }
-                            ]
-                        }
-                    },
-                    "overrides": []
-                },
-                "gridPos": {
-                    "h": 10,
-                    "w": 24,
-                    "x": 0,
-                    "y": 0
-                },
-                "id": 1,
-                "options": {
-                    "colorMode": "value",
-                    "graphMode": "area",
-                    "justifyMode": "auto",
-                    "orientation": "auto",
-                    "percentChangeColorMode": "standard",
-                    "reduceOptions": {
-                        "calcs": [
-                            "lastNotNull"
-                        ],
-                        "fields": "",
-                        "values": false
-                    },
-                    "showPercentChange": false,
-                    "textMode": "auto",
-                    "wideLayout": true
-                },
-                "pluginVersion": "11.4.0",
-                "targets": [
-                    {
-                        "datasource": {
-                            "type": "prometheus",
-                            "uid": "PABDA7AB1AD2A1489"
-                        },
-                        "disableTextWrap": false,
-                        "editorMode": "builder",
-                        "expr": "events_running_pods",
-                        "fullMetaSearch": false,
-                        "includeNullMetadata": true,
-                        "legendFormat": "__auto",
-                        "range": true,
-                        "refId": "A",
-                        "useBackend": false
-                    }
-                ],
-                "title": "Running pods",
-                "type": "stat"
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PABDA7AB1AD2A1489"
+              },
+              "disableTextWrap": false,
+              "editorMode": "builder",
+              "expr": "events_running_pods",
+              "fullMetaSearch": false,
+              "includeNullMetadata": true,
+              "legendFormat": "__auto",
+              "range": true,
+              "refId": "A",
+              "useBackend": false
             }
-        ],
-        "preload": false,
-        "schemaVersion": 40,
-        "tags": [],
-        "templating": {
-            "list": []
+          ],
+          "title": "Running pods",
+          "type": "stat"
         },
-        "time": {
-            "from": "now-5m",
-            "to": "now"
-        },
-        "timepicker": {},
-        "timezone": "browser",
-        "title": "Playground sandbox",
-        "uid": "beai0b666el1ca",
-        "version": 2,
-        "weekStart": ""
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "P982945308D3682D1"
+          },
+          "fieldConfig": {
+            "defaults": {},
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 11,
+            "w": 24,
+            "x": 0,
+            "y": 8
+          },
+          "id": 2,
+          "options": {
+            "dedupStrategy": "none",
+            "enableLogDetails": true,
+            "prettifyLogMessage": false,
+            "showCommonLabels": false,
+            "showLabels": false,
+            "showTime": true,
+            "sortOrder": "Descending",
+            "wrapLogMessage": true
+          },
+          "pluginVersion": "11.4.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "loki",
+                "uid": "P982945308D3682D1"
+              },
+              "editorMode": "builder",
+              "expr": "{app=\"playground-sandbox\"} != `kube-probe`",
+              "queryType": "range",
+              "refId": "A"
+            }
+          ],
+          "title": "Server logs",
+          "type": "logs"
+        }
+      ],
+      "preload": false,
+      "schemaVersion": 40,
+      "tags": [],
+      "templating": {
+        "list": []
+      },
+      "time": {
+        "from": "now-5m",
+        "to": "now"
+      },
+      "timepicker": {},
+      "timezone": "browser",
+      "title": "Playground sandbox",
+      "uid": "beai0b666el1ca",
+      "version": 2,
+      "weekStart": ""
     }
