@@ -40,17 +40,11 @@ spec:
               - name: frontend.image.tag
                 value: "pr-{{.number}}-{{.head_sha}}"
               - name: sandboxNamespace
-                value: "{{.branch_slug}}-{{.number}}"
+                value: "{{.branch_slug}}-{{.number}}-public"
               - name: ingress.className
                 value: "nginx"
               - name: ingress.domain
                 value: "{{.branch_slug}}-{{.number}}.127.0.0.1.nip.io"
-              - name: ingress.apiSubdomain
-                value: "api"
-              - name: ingress.projectSubdomain
-                value: "project"
-              - name: ingress.vscodeSubdomain
-                value: "vscode"
       destination:
         name: k3d-apps
         namespace: playground-sandbox-{{.branch_slug}}-{{.number}}
