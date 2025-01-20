@@ -11,9 +11,7 @@ spec:
         github:
           owner: utwo
           repo: playground-sandbox
-          # tokenRef:
-          #   secretName: github-repo
-          #   key: password
+          appSecretName: github-utwo-repo
           # Labels is used to filter the PRs that you want to target. (optional)
           labels:
             - preview
@@ -21,6 +19,9 @@ spec:
   template:
     metadata:
       name: "playground-sandbox-pr-{{.branch_slug}}-{{.number}}"
+      annotations:
+        argocd.argoproj.io/default-view: pods
+        notifications.argoproj.io/subscribe.on-deployed.github: "utwo/playground-sandbox"
     spec:
       project: apps
       sources:
@@ -43,12 +44,12 @@ spec:
         name: k3d-apps
         namespace: playground-sandbox-{{.branch_slug}}-{{.number}}
       info:
-        - name: API URL
-          value: >-
-            "https://api.{{.branch_slug}}-{{.number}}.127.0.0.1.nip.io:8000"
         - name: Webapp URL
           value: >-
             "https://{{.branch_slug}}-{{.number}}.127.0.0.1.nip.io:8000"
+        - name: API URL
+          value: >-
+            "https://api.{{.branch_slug}}-{{.number}}.127.0.0.1.nip.io:8000"
       syncPolicy:
         automated:
           prune: true

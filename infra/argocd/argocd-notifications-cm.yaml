@@ -1,0 +1,90 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-notifications-cm
+data:
+  service.github: |
+    appID: 1055712
+    installationID: 57077125
+    privateKey: $githubAppPrivateKey
+  context: |
+    argocdUrl: https://argocd.127.0.0.1.nip.io
+  template.app-deployed: |
+    github:
+      repoURLPath: "{{ (index .app.spec.sources 0).repoURL }}"
+      revisionPath: "{{index .app.status.operationState.syncResult.revisions 0}}"
+      notificationPosition: 1
+      status:
+        state: success
+        label: "continuous-delivery/{{.app.metadata.name}}"
+        targetURL: "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}"
+      deployment:
+        state: success
+        environment: development
+        environmentURL: "{{(index .app.status.summary.externalURLs 0)}}"
+        logURL: "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}"
+        requiredContexts: []
+        autoMerge: true
+        transientEnvironment: false
+        reference: master
+      pullRequestComment:
+        content: |
+          ## <img alt="argocd" width="16" src="https://avatars.githubusercontent.com/in/1055712?s=80&v=4" /> Application deployed successfully
+
+          <table>
+          <tr><td><strong>Latest commit:</strong> </td><td>
+          <code>{{index .app.status.operationState.syncResult.revisions 0}}</code>
+          </td></tr>
+          <tr><td><strong>Status:</strong></td><td>&nbsp;✅&nbsp; Deploy successful!</td></tr>
+          <tr><td><strong>Preview Webapp:</strong></td><td>
+          <a href='{{(index .app.status.summary.externalURLs 0)}}'>{{(index .app.status.summary.externalURLs 0)}}</a>
+          </td></tr>
+          <tr><td><strong>Preview API:</strong></td><td>
+          <a href='{{(index .app.status.summary.externalURLs 0)}}'>{{(index .app.status.summary.externalURLs 1)}}</a>
+          </td></tr>
+          <tr><td><strong>ArgoCD Application:</strong> </td><td>
+          <a href='{{.context.argocdUrl}}/applications/{{.app.metadata.name}}'>{{.app.metadata.name}}</a>
+          </td></tr>
+          </table>
+
+    message: |
+      A new version of {{.app.metadata.name}} has been deployed successfully.
+      Preview Webapp: {{(index .app.status.summary.externalURLs 0)}}
+      Preview API: {{(index .app.status.summary.externalURLs 1)}}
+      Argocd URL: {{.context.argocdUrl}}/applications/{{.app.metadata.name}}
+
+    slack:
+      attachments: |
+        [{
+          "title": "{{ .app.metadata.name}}",
+          "title_link":"{{.context.argocdUrl}}/applications/{{.app.metadata.name}}",
+          "color": "#18be52",
+          "fields": [
+          {
+            "title": "Sync Status",
+            "value": "{{.app.status.sync.status}}",
+            "short": true
+          },
+          {
+            "title": {{- if .app.spec.source }} "Repository" {{- else if .app.spec.sources }} "Repositories" {{- end }},
+            "value": {{- if .app.spec.source }} ":arrow_heading_up: {{ .app.spec.source.repoURL }}" {{- else if .app.spec.sources }} "{{- range $index, $source := .app.spec.sources }}{{ if $index }}\n{{ end }}:arrow_heading_up: {{ $source.repoURL }}{{- end }}" {{- end }},
+            "short": true
+          },
+          {
+            "title": "Revision",
+            "value": "{{.app.status.sync.revision}}",
+            "short": true
+          }
+          {{range $index, $c := .app.status.conditions}}
+          ,
+          {
+            "title": "{{$c.type}}",
+            "value": "{{$c.message}}",
+            "short": true
+          }
+          {{end}}
+          ]
+        }]
+      deliveryPolicy: Post
+      groupingKey: ""
+      notifyBroadcast: false

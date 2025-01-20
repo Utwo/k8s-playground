@@ -9,6 +9,8 @@ resources:
   - project.yaml
   - ingress.yaml
   - argocd-secrets.yaml
+  - repo-secrets.yaml
+  - argocd-notifications-secret.yaml
   - clusters/k3d-apps-secret.yaml
   # metrics
   - metrics/argocd-metrics.yaml
@@ -21,6 +23,7 @@ patches:
   - path: argocd-cmd-params-cm.yaml
   - path: argocd-cm.yaml
   - path: argocd-rbac-cm.yaml
+  - path: argocd-notifications-cm.yaml
   - patch: |-
       apiVersion: v1
       kind: Secret
