@@ -1,0 +1,37 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: keda
+  namespace: argocd
+spec:
+  goTemplate: true
+  generators:
+    - clusters:
+        selector:
+          matchLabels:
+            keda: "true"
+        values:
+          clusterName: "{{.name}}"
+  template:
+    metadata:
+      name: "keda-{{.values.clusterName}}"
+    spec:
+      project: infra
+      source:
+        chart: keda
+        helm:
+          valuesObject:
+            resources:
+              operator: {}
+              metricServer: {}
+              webhooks: {}
+        repoURL: https://kedacore.github.io/charts
+        targetRevision: 2.16.1
+      destination:
+        namespace: keda
+        name: "{{.name}}"
+      syncPolicy:
+        automated: {}
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
