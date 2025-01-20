@@ -17,16 +17,25 @@ spec:
       name: "keda-{{.values.clusterName}}"
     spec:
       project: infra
-      source:
-        chart: keda
-        helm:
-          valuesObject:
-            resources:
-              operator: {}
-              metricServer: {}
-              webhooks: {}
-        repoURL: https://kedacore.github.io/charts
-        targetRevision: 2.16.1
+      sources:
+        - chart: keda
+          helm:
+            valuesObject:
+              resources:
+                operator: {}
+                metricServer: {}
+                webhooks: {}
+          repoURL: https://kedacore.github.io/charts
+          targetRevision: 2.16.1
+        - chart: keda-add-ons-http
+          helm:
+            valuesObject:
+              resources:
+                operator: {}
+                metricServer: {}
+                webhooks: {}
+          repoURL: https://kedacore.github.io/charts
+          targetRevision: 0.9.0
       destination:
         namespace: keda
         name: "{{.name}}"
