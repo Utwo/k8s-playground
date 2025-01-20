@@ -19,6 +19,7 @@ resources:
   - metrics/grafana-dashboard.yaml
 
 patches:
+  - path: https://raw.githubusercontent.com/argoproj/argo-cd/refs/heads/master/notifications_catalog/install.yaml
   - path: argocd-cmd-params-cm.yaml
   - path: argocd-cm.yaml
   - path: argocd-rbac-cm.yaml
