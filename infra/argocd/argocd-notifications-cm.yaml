@@ -9,6 +9,13 @@ data:
     privateKey: $githubAppPrivateKey
   context: |
     argocdUrl: https://argocd.127.0.0.1.nip.io
+  trigger.on-deployed: |
+    # TODO: delete this after we upgrade argocd to 2.14
+    - description: Application is synced and healthy. Triggered once per commit.
+      oncePer: app.status.operationState?.syncResult?.revision
+      send:
+      - app-deployed
+      when: app.status.operationState != nil and app.status.operationState.phase in ['Succeeded'] and app.status.health.status == 'Healthy'
   template.app-deployed: |
     github:
       repoURLPath: "{{ (index .app.spec.sources 0).repoURL }}"
@@ -26,7 +33,7 @@ data:
         requiredContexts: []
         autoMerge: true
         transientEnvironment: false
-        reference: master
+        reference: main
       pullRequestComment:
         content: |
           ## <img alt="argocd" width="16" src="https://avatars.githubusercontent.com/in/1055712?s=80&v=4" /> Application deployed successfully
@@ -37,10 +44,10 @@ data:
           </td></tr>
           <tr><td><strong>Status:</strong></td><td>&nbsp;✅&nbsp; Deploy successful!</td></tr>
           <tr><td><strong>Preview Webapp:</strong></td><td>
-          <a href='{{(index .app.status.summary.externalURLs 0)}}'>{{(index .app.status.summary.externalURLs 0)}}</a>
+          <a href='{{(index .app.status.summary.externalURLs 0)}}'>{{(index .app.status.summary.externalURLs 2)}}</a>
           </td></tr>
           <tr><td><strong>Preview API:</strong></td><td>
-          <a href='{{(index .app.status.summary.externalURLs 0)}}'>{{(index .app.status.summary.externalURLs 1)}}</a>
+          <a href='{{(index .app.status.summary.externalURLs 0)}}'>{{(index .app.status.summary.externalURLs 3)}}</a>
           </td></tr>
           <tr><td><strong>ArgoCD Application:</strong> </td><td>
           <a href='{{.context.argocdUrl}}/applications/{{.app.metadata.name}}'>{{.app.metadata.name}}</a>
