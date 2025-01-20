@@ -6,6 +6,9 @@ metadata:
 spec:
   project: apps
   sources:
+    - repoURL: https://github.com/Utwo/k8s-playground
+      path: apps/playground-sandbox
+      targetRevision: HEAD
     - repoURL: https://github.com/Utwo/playground-sandbox
       path: ./helm/charts/playground-sandbox
       targetRevision: HEAD
@@ -16,6 +19,16 @@ spec:
               enabled: true
               additionalLabels:
                 release: kube-prometheus-stack-k3d-apps
+            env:
+              - name: SANDBOX_NODE_LABEL
+                value: "default"
+              - name: OTEL_EXPORTER_OTLP_ENDPOINT
+                value: "http://otel-collector.172.20.0.3.nip.io"
+              - name: OTEL_EXPORTER_OTLP_TRACES_HEADERS
+                valueFrom:
+                  secretKeyRef:
+                    name: playground-sandbox
+                    key: OTEL_EXPORTER_OTLP_TRACES_HEADERS
         parameters:
           - name: backend.image.tag
             value: $ARGOCD_APP_REVISION_SHORT
