@@ -14,7 +14,7 @@ spec:
     service: backend
     portName: http
   replicas:
-    min: 1
+    min: 0
     max: 10
   scaledownPeriod: 60
   scalingMetric:
