@@ -11,7 +11,7 @@ spec:
       targetRevision: HEAD
       ref: myRepo # repo is available via symlink "myRepo"
     - repoURL: https://grafana.github.io/helm-charts
-      targetRevision: 1.18.0
+      targetRevision: 1.18.1
       chart: tempo
       helm:
         valueFiles:
