@@ -29,6 +29,11 @@ spec:
           path: k8s/playground-sandbox
           targetRevision: "{{.head_sha}}"
           helm:
+            valuesObject:
+              volumeClaimDefault:
+                createVolume: false
+              volumeClaimPublic:
+                createVolume: false
             parameters:
               - name: backend.image.tag
                 value: "pr-{{.number}}-{{.head_sha}}"
