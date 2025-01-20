@@ -17,7 +17,6 @@ resources:
   - metrics/argocd-repo-server-metrics.yaml
   - metrics/argocd-server-metrics.yaml
   - metrics/grafana-dashboard.yaml
-  # - repo-secret.yaml
 
 patches:
   - path: argocd-cmd-params-cm.yaml
