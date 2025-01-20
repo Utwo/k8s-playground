@@ -29,18 +29,13 @@ spec:
           path: k8s/playground-sandbox
           targetRevision: "{{.head_sha}}"
           helm:
-            valuesObject:
-              volumeClaimDefault:
-                createVolume: false
-              volumeClaimPublic:
-                createVolume: false
             parameters:
               - name: backend.image.tag
                 value: "pr-{{.number}}-{{.head_sha}}"
               - name: frontend.image.tag
                 value: "pr-{{.number}}-{{.head_sha}}"
               - name: sandboxNamespace
-                value: "{{.branch_slug}}-{{.number}}-public"
+                value: "public-{{.branch_slug}}-{{.number}}"
               - name: ingress.className
                 value: "nginx"
               - name: ingress.domain
