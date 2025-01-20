@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: opentelemetry-collector
+  namespace: argocd
+spec:
+  project: monitoring
+  sources:
+    - repoURL: https://github.com/Utwo/k8s-playground
+      path: monitoring/opentelemetry-collector
+      targetRevision: HEAD
+      ref: myRepo
+    - repoURL: https://open-telemetry.github.io/opentelemetry-helm-charts
+      targetRevision: 0.111.2
+      chart: opentelemetry-collector
+      helm:
+        valueFiles:
+          - $myRepo/monitoring/opentelemetry-collector/helm-chart-values/values.yaml
+  destination:
+    namespace: opentelemetry-collector
+    name: in-cluster
+  syncPolicy:
+    automated: {}
+    syncOptions:
+      - CreateNamespace=true

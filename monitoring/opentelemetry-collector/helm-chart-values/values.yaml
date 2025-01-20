@@ -1,0 +1,101 @@
+mode: deployment
+
+replicaCount: 1
+image:
+  repository: "otel/opentelemetry-collector-k8s"
+
+ports:
+  jaeger-compact:
+    enabled: false
+  jaeger-thrift:
+    enabled: false
+  jaeger-grpc:
+    enabled: false
+  zipkin:
+    enabled: false
+  metrics:
+    enabled: true
+
+config:
+  extensions:
+    health_check: {}
+    basicauth/server:
+      htpasswd:
+        inline: |
+          ${env:BASIC_AUTH_USERNAME}:${env:BASIC_AUTH_PASSWORD}
+
+  receivers:
+    jaeger: null
+    zipkin: null
+    otlp:
+      protocols:
+        http:
+          auth:
+            authenticator: basicauth/server
+
+  service:
+    # telemetry:
+    #   logs:
+    #     level: "debug"
+    extensions:
+      - health_check
+      - basicauth/server
+    telemetry:
+      metrics:
+        address: ":8888"
+    pipelines:
+      traces:
+        receivers:
+          - otlp
+        processors:
+          - batch
+          - tail_sampling
+        exporters:
+          - otlp/tempo
+
+  processors:
+    batch: {}
+    tail_sampling:
+      decision_wait: 30s
+      num_traces: 200000
+      policies:
+        - name: probabilistic
+          type: probabilistic
+          probabilistic: { sampling_percentage: 10 }
+
+  exporters:
+    otlp/tempo:
+      endpoint: tempo.tempo.svc.cluster.local:4317
+      tls:
+        insecure: true
+      sending_queue:
+        enabled: true
+        num_consumers: 100
+        queue_size: 10000
+
+extraEnvs:
+  - name: BASIC_AUTH_USERNAME
+    valueFrom:
+      secretKeyRef:
+        name: otel-secret
+        key: BASIC_AUTH_USERNAME
+  - name: BASIC_AUTH_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: otel-secret
+        key: BASIC_AUTH_PASSWORD
+
+ingress:
+  enabled: true
+  ingressClassName: nginx
+  hosts:
+    - host: otel-collector.172.20.0.3.nip.io
+      paths:
+        - path: /
+          pathType: Prefix
+          port: 4318
+
+serviceMonitor:
+  enabled: true
+  extraLabels:
+    release: kube-prometheus-stack-k3s-control
