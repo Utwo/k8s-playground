@@ -7,7 +7,7 @@ spec:
   project: apps
   sources:
     - repoURL: https://github.com/Utwo/playground-sandbox
-      path: ./k8s/playground-sandbox
+      path: ./helm/charts/playground-sandbox
       targetRevision: HEAD
       helm:
         valuesObject:

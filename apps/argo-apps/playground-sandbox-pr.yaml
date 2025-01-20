@@ -26,9 +26,18 @@ spec:
       project: apps
       sources:
         - repoURL: https://github.com/Utwo/playground-sandbox
-          path: k8s/playground-sandbox
+          path: helm/charts/playground-sandbox
           targetRevision: "{{.head_sha}}"
           helm:
+            valuesObject:
+              volumeClaimDefault:
+                backend:
+                  hostPath:
+                    path: "/tmp/k3dvol/{{.branch_slug}}-{{.number}}"
+              volumeClaimPublic:
+                backend:
+                  hostPath:
+                    path: "/tmp/k3dvol/{{.branch_slug}}-{{.number}}"
             parameters:
               - name: backend.image.tag
                 value: "pr-{{.number}}-{{.head_sha}}"
