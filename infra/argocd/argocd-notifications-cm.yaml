@@ -4,8 +4,8 @@ metadata:
   name: argocd-notifications-cm
 data:
   service.github: |
-    appID: 1055712
-    installationID: 57077125
+    appID: 1117221
+    installationID: 59809587
     privateKey: $githubAppPrivateKey
   context: |
     argocdUrl: https://argocd.127.0.0.1.nip.io
