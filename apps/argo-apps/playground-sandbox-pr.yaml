@@ -28,6 +28,13 @@ spec:
         - repoURL: https://github.com/Utwo/k8s-playground
           path: apps/playground-sandbox
           targetRevision: HEAD
+        - repoURL: https://github.com/Utwo/k8s-playground
+          path: apps/playground-sandbox/playground-sandbox-pr
+          targetRevision: HEAD
+          helm:
+            valuesObject:
+              hosts:
+                - "api.{{.branch_slug}}-{{.number}}.127.0.0.1.nip.io"
         - repoURL: https://github.com/Utwo/playground-sandbox
           path: helm/charts/playground-sandbox
           targetRevision: "{{.head_sha}}"
