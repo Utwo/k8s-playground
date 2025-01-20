@@ -13,7 +13,7 @@ spec:
       directory:
         recurse: true
     - repoURL: https://victoriametrics.github.io/helm-charts
-      targetRevision: 0.40.4
+      targetRevision: 0.40.5
       chart: victoria-metrics-operator
       helm:
         valuesObject:
