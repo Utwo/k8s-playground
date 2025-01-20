@@ -30,10 +30,11 @@ spec:
         - chart: keda-add-ons-http
           helm:
             valuesObject:
-              resources:
-                operator: {}
-                metricServer: {}
-                webhooks: {}
+              scaler:
+                replicas: 1
+              interceptor:
+                replicas:
+                  min: 1
           repoURL: https://kedacore.github.io/charts
           targetRevision: 0.9.0
       destination:
