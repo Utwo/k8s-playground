@@ -65,8 +65,6 @@ config:
           probabilistic: { sampling_percentage: 10 }
 
   exporters:
-    debug:
-      verbosity: detailed
     otlp/tempo:
       endpoint: tempo.tempo.svc.cluster.local:4317
       tls:
