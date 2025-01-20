@@ -109,12 +109,12 @@ datasources:
             hide: false
           tracesToLogsV2:
             datasourceUid: "P982945308D3682D1"
-            spanStartTimeShift: "1h"
-            spanEndTimeShift: "-1h"
+            spanStartTimeShift: "-1h"
+            spanEndTimeShift: "1h"
           tracesToMetrics:
             datasourceUid: "PABDA7AB1AD2A1489"
-            spanStartTimeShift: "1h"
-            spanEndTimeShift: "-1h"
+            spanStartTimeShift: "-1h"
+            spanEndTimeShift: "1h"
           serviceMap:
             datasourceUid: "PABDA7AB1AD2A1489"
           lokiSearch:

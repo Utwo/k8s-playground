@@ -51,7 +51,6 @@ config:
           - batch
           - tail_sampling
         exporters:
-          - debug
           - otlp/tempo
 
   processors:
