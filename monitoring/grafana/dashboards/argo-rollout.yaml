@@ -97,7 +97,7 @@ data:
                 "tableColumn": "",
                 "targets": [
                     {
-                        "expr": "time() - max(process_start_time_seconds{job=\"argo-rollouts-metrics\"})",
+                        "expr": "time() - max(process_start_time_seconds{})",
                         "format": "time_series",
                         "intervalFactor": 1,
                         "refId": "A"
@@ -179,7 +179,7 @@ data:
                 "pluginVersion": "7.4.3",
                 "targets": [
                     {
-                        "expr": "sum(rollout_info{job=\"argo-rollouts-metrics\"})",
+                        "expr": "sum(rollout_info{})",
                         "format": "time_series",
                         "intervalFactor": 1,
                         "refId": "A"
@@ -241,7 +241,7 @@ data:
                 "steppedLine": false,
                 "targets": [
                     {
-                        "expr": "sum(rollout_info{job=\"argo-rollouts-metrics\"}) by (strategy)",
+                        "expr": "sum(rollout_info{}) by (strategy)",
                         "format": "time_series",
                         "intervalFactor": 1,
                         "refId": "A"
@@ -366,7 +366,7 @@ data:
                         "pluginVersion": "7.4.3",
                         "targets": [
                             {
-                                "expr": "sum(rollout_info{phase=\"Completed\",job=\"argo-rollouts-metrics\"} == 1)",
+                                "expr": "sum(rollout_info{phase=\"Completed\"} == 1)",
                                 "format": "time_series",
                                 "hide": false,
                                 "instant": true,
@@ -446,7 +446,7 @@ data:
                         "pluginVersion": "7.4.3",
                         "targets": [
                             {
-                                "expr": "sum(rollout_info{phase=\"Progressing\",job=\"argo-rollouts-metrics\"})",
+                                "expr": "sum(rollout_info{phase=\"Progressing\"})",
                                 "format": "time_series",
                                 "hide": false,
                                 "instant": true,
@@ -526,7 +526,7 @@ data:
                         "pluginVersion": "7.4.3",
                         "targets": [
                             {
-                                "expr": "sum(rollout_info{phase=\"Paused\",job=\"argo-rollouts-metrics\"})",
+                                "expr": "sum(rollout_info{phase=\"Paused\"})",
                                 "format": "time_series",
                                 "hide": false,
                                 "instant": true,
@@ -606,7 +606,7 @@ data:
                         "pluginVersion": "7.4.3",
                         "targets": [
                             {
-                                "expr": "sum(rollout_info{job=\"argo-rollouts-metrics\",phase=\"Error\"} == 1)",
+                                "expr": "sum(rollout_info{phase=\"Error\"} == 1)",
                                 "format": "time_series",
                                 "hide": false,
                                 "intervalFactor": 1,
@@ -683,7 +683,7 @@ data:
                         "pluginVersion": "7.4.3",
                         "targets": [
                             {
-                                "expr": "sum(rollout_info{job=\"argo-rollouts-metrics\",phase=\"InvalidSpec\"} == 1)",
+                                "expr": "sum(rollout_info{phase=\"InvalidSpec\"} == 1)",
                                 "format": "time_series",
                                 "hide": false,
                                 "instant": true,
@@ -763,7 +763,7 @@ data:
                         "pluginVersion": "7.4.3",
                         "targets": [
                             {
-                                "expr": "sum(rollout_info{job=\"argo-rollouts-metrics\",phase=\"Timeout\"} == 1)",
+                                "expr": "sum(rollout_info{phase=\"Timeout\"} == 1)",
                                 "format": "time_series",
                                 "hide": false,
                                 "intervalFactor": 1,
@@ -840,7 +840,7 @@ data:
                         "pluginVersion": "7.4.3",
                         "targets": [
                             {
-                                "expr": "sum(rollout_info{job=\"argo-rollouts-metrics\",phase=\"Abort\"} == 1)",
+                                "expr": "sum(rollout_info{phase=\"Abort\"} == 1)",
                                 "format": "time_series",
                                 "hide": false,
                                 "interval": "",
@@ -902,7 +902,7 @@ data:
                         "steppedLine": false,
                         "targets": [
                             {
-                                "expr": "sum(increase(rollout_reconcile_count{job=\"argo-rollouts-metrics\"}[10m]))",
+                                "expr": "sum(increase(rollout_reconcile_count{}[10m]))",
                                 "format": "time_series",
                                 "intervalFactor": 1,
                                 "refId": "A"
@@ -1070,7 +1070,7 @@ data:
                         "steppedLine": false,
                         "targets": [
                             {
-                                "expr": "go_memstats_heap_alloc_bytes{job=\"argo-rollouts-metrics\"}",
+                                "expr": "go_memstats_heap_alloc_bytes{}",
                                 "format": "time_series",
                                 "intervalFactor": 1,
                                 "refId": "A"
@@ -1173,7 +1173,7 @@ data:
                         "pluginVersion": "7.4.3",
                         "targets": [
                             {
-                                "expr": "rollout_info{job=\"argo-rollouts-metrics\",namespace=\"$rollout_namespace\",name=\"$rollout_name\"}",
+                                "expr": "rollout_info{namespace=\"$rollout_namespace\",name=\"$rollout_name\"}",
                                 "format": "table",
                                 "instant": true,
                                 "interval": "",
@@ -1246,7 +1246,7 @@ data:
                         "pluginVersion": "7.4.3",
                         "targets": [
                             {
-                                "expr": "rollout_info_replicas_desired{job=\"argo-rollouts-metrics\",namespace=\"$rollout_namespace\",name=\"$rollout_name\"}",
+                                "expr": "rollout_info_replicas_desired{namespace=\"$rollout_namespace\",name=\"$rollout_name\"}",
                                 "instant": true,
                                 "interval": "",
                                 "legendFormat": "",
@@ -1306,7 +1306,7 @@ data:
                         "pluginVersion": "7.4.3",
                         "targets": [
                             {
-                                "expr": "rollout_info_replicas_available{job=\"argo-rollouts-metrics\",namespace=\"$rollout_namespace\",name=\"$rollout_name\"}",
+                                "expr": "rollout_info_replicas_available{namespace=\"$rollout_namespace\",name=\"$rollout_name\"}",
                                 "hide": false,
                                 "instant": true,
                                 "interval": "",
@@ -1369,7 +1369,7 @@ data:
                         "pluginVersion": "7.4.3",
                         "targets": [
                             {
-                                "expr": "rollout_info_replicas_unavailable{job=\"argo-rollouts-metrics\",namespace=\"$rollout_namespace\",name=\"$rollout_name\"}",
+                                "expr": "rollout_info_replicas_unavailable{namespace=\"$rollout_namespace\",name=\"$rollout_name\"}",
                                 "hide": false,
                                 "instant": true,
                                 "interval": "",
