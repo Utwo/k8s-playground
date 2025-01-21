@@ -32,6 +32,8 @@ spec:
                     name: playground-sandbox
                     key: OTEL_EXPORTER_OTLP_TRACES_HEADERS
         parameters:
+          - name: backend.env[0].value
+            value: $ARGOCD_APP_REVISION_SHORT
           - name: backend.image.tag
             value: $ARGOCD_APP_REVISION_SHORT
           - name: frontend.image.tag
