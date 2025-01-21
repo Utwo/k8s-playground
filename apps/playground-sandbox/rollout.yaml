@@ -15,6 +15,15 @@ spec:
   minReadySeconds: 15
   strategy:
     canary:
+      # An AnalysisTemplate is referenced here, which starts an AnalysisRun as soon as the update
+      # begins. The run is terminated when the update completes. A failure/error of the analysis
+      # will cause the rollout's update to abort, and set the canary weight to zero.
+      analysis:
+        templates:
+          - templateName: success-rate
+        args:
+          - name: canary
+            value: playground-sandbox-backend-canary-http
       # Reference to a Service which the controller will update to point to the canary ReplicaSet
       canaryService: backend-canary
       # Reference to a Service which the controller will update to point to the stable ReplicaSet
@@ -30,5 +39,10 @@ spec:
         - pause:
             duration: 1m
         - setWeight: 50
-        - pause: {}
+        - pause:
+            duration: 1m
+        - setWeight: 75
+        - pause:
+            duration: 1m
+        - setWeight: 100
   revisionHistoryLimit: 2
