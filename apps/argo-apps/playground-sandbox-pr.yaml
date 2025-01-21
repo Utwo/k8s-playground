@@ -26,10 +26,7 @@ spec:
       project: apps
       sources:
         - repoURL: https://github.com/Utwo/k8s-playground
-          path: apps/playground-sandbox
-          targetRevision: HEAD
-        - repoURL: https://github.com/Utwo/k8s-playground
-          path: apps/playground-sandbox/playground-sandbox-pr
+          path: apps/playground-sandbox-pr
           targetRevision: HEAD
           helm:
             valuesObject:
@@ -53,12 +50,17 @@ spec:
                   - name: SANDBOX_NODE_LABEL
                     value: "default"
                   - name: OTEL_EXPORTER_OTLP_ENDPOINT
-                    value: "http://hotel-collector.172.20.0.3.nip.io/v1/traces"
+                    value: "http://otel-collector.172.20.0.3.nip.io/v1/traces"
                   - name: OTEL_EXPORTER_OTLP_TRACES_HEADERS
                     valueFrom:
                       secretKeyRef:
                         name: playground-sandbox
                         key: OTEL_EXPORTER_OTLP_TRACES_HEADERS
+              ingress:
+                className: nginx
+                backendService:
+                  name: keda-add-ons-http-interceptor-proxy
+                  portName: proxy
             parameters:
               - name: backend.image.tag
                 value: "pr-{{.number}}-{{.head_sha}}"
@@ -66,8 +68,6 @@ spec:
                 value: "pr-{{.number}}-{{.head_sha}}"
               - name: sandboxNamespace
                 value: "public-{{.branch_slug}}-{{.number}}"
-              - name: ingress.className
-                value: "nginx"
               - name: ingress.domain
                 value: "{{.branch_slug}}-{{.number}}.127.0.0.1.nip.io"
       destination:
