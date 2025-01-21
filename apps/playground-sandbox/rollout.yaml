@@ -3,6 +3,16 @@ kind: Rollout
 metadata:
   name: playground-sandbox
 spec:
+  selector:
+    matchLabels:
+      app: backend
+      app.kubernetes.io/name: playground-sandbox
+  workloadRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: backend
+    scaleDown: progressively
+  minReadySeconds: 15
   strategy:
     canary:
       # Reference to a Service which the controller will update to point to the canary ReplicaSet
@@ -11,4 +21,14 @@ spec:
       stableService: backend
       trafficRouting:
         nginx:
-          stableIngress: backend
+          stableIngress: playground-sandbox
+      steps:
+        - setWeight: 5
+        - pause:
+            duration: 1m
+        - setWeight: 15
+        - pause:
+            duration: 1m
+        - setWeight: 25
+        - pause: {}
+  revisionHistoryLimit: 2
