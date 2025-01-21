@@ -6,7 +6,6 @@ spec:
   groups:
     # Alerts group for vmalert assumes that Grafana dashboard
     # https://grafana.com/grafana/dashboards/14950/ is installed.
-    # Pls update the `dashboard` annotation according to your setup.
     - name: vmalert
       interval: 30s
       rules:
