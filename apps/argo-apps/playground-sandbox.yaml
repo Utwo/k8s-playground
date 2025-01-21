@@ -15,6 +15,7 @@ spec:
       helm:
         valuesObject:
           backend:
+            replicaCount: 0
             serviceMonitor:
               enabled: true
               additionalLabels:
