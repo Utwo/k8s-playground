@@ -8,4 +8,5 @@ packages = [
     "sops",
     "age",
     "argocd",
+    "argo-rollouts",
 ]
