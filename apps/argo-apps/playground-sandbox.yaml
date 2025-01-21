@@ -20,6 +20,8 @@ spec:
               additionalLabels:
                 release: kube-prometheus-stack-k3d-apps
             env:
+              - name: SERVICE_VERSION
+                value: $ARGOCD_APP_REVISION_SHORT
               - name: SANDBOX_NODE_LABEL
                 value: "default"
               - name: OTEL_EXPORTER_OTLP_ENDPOINT

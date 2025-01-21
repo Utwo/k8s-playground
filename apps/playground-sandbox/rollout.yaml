@@ -29,6 +29,6 @@ spec:
         - setWeight: 15
         - pause:
             duration: 1m
-        - setWeight: 25
+        - setWeight: 50
         - pause: {}
   revisionHistoryLimit: 2
