@@ -34,11 +34,11 @@ spec:
                     key: OTEL_EXPORTER_OTLP_TRACES_HEADERS
         parameters:
           - name: backend.env[0].value
-            value: 3acd921
+            value: $ARGOCD_APP_REVISION_SHORT
           - name: backend.image.tag
-            value: 3acd921
+            value: $ARGOCD_APP_REVISION_SHORT
           - name: frontend.image.tag
-            value: 3acd921
+            value: $ARGOCD_APP_REVISION_SHORT
           - name: ingress.className
             value: "nginx"
   destination:

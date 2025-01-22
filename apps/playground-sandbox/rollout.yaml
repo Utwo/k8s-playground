@@ -21,9 +21,10 @@ spec:
       analysis:
         templates:
           - templateName: success-rate
+        startingStep: 2 # delay starting analysis run until setWeight: 15%
         args:
-          - name: canary
-            value: playground-sandbox-backend-canary-http
+          - name: ingress
+            value: playground-sandbox
       # Reference to a Service which the controller will update to point to the canary ReplicaSet
       canaryService: backend-canary
       # Reference to a Service which the controller will update to point to the stable ReplicaSet

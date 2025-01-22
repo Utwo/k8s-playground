@@ -4,7 +4,7 @@ metadata:
   name: success-rate
 spec:
   args:
-    - name: canary
+    - name: ingress
     - name: PROMETHEUS_AUTH_TOKEN
       valueFrom:
         secretKeyRef:
@@ -13,7 +13,7 @@ spec:
   metrics:
     - name: success-rate
       interval: 10s
-      successCondition: result[0] > 0.90
+      successCondition: len(result) == 0 || result[0] > 0.90
       provider:
         prometheus:
           address: http://collector.172.20.0.5.nip.io
@@ -23,7 +23,7 @@ spec:
               value: Bearer {{ args.PROMETHEUS_AUTH_TOKEN }}
           query: >+
             sum(
-              rate(nginx_ingress_controller_requests{canary="{{args.canary}}",status!~"[4-5].*"}[20s]))
+              rate(nginx_ingress_controller_requests{ingress="{{args.ingress}}",status!~"[4-5].*"}[20s]))
               /
-              sum(rate(nginx_ingress_controller_requests{canary="{{args.canary}}"}[20s])
+              sum(rate(nginx_ingress_controller_requests{ingress="{{args.ingress}}"}[20s])
             )
