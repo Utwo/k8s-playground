@@ -36,12 +36,12 @@ spec:
     - uses: yaml-update
       as: update-image
       config:
-        path: ${{ vars.srcPath }}/apps/${{ vars.applicationName }}/envs/${{ ctx.stage }}/values.yaml
+        path: ${{ vars.srcPath }}/repos/${{ vars.applicationName }}-repo/helm/charts/${{ vars.applicationName }}/values.yaml
         updates:
           - key: backend.image.tag
-            value: ${{ commitFrom(vars.gitopsRepo).ID }}
+            value: ${{ commitFrom(vars.gitRepo).ID }}
           - key: frontend.image.tag
-            value: ${{ commitFrom(vars.gitopsRepo).ID }}
+            value: ${{ commitFrom(vars.gitRepo).ID }}
     - uses: helm-template
       config:
         path: ${{ vars.srcPath }}/repos/${{ vars.applicationName }}-repo/helm/charts/${{ vars.applicationName }}
@@ -67,6 +67,7 @@ spec:
         messageFromSteps:
           - update-image
     - uses: git-push
+      as: push
       config:
         path: ${{ vars.outPath }}
     - uses: argocd-update
@@ -75,4 +76,4 @@ spec:
           - name: ${{ ctx.project }}-${{ ctx.stage }}
             sources:
               - repoURL: ${{ vars.gitopsRepo }}
-                desiredRevision: ${{ outputs.commit.commit }}
+                desiredRevision: ${{ task.outputs['commit'].commit }}
