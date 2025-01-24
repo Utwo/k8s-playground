@@ -34,7 +34,7 @@ spec:
         - name: app
           securityContext:
             {}
-          image: "ghcr.io/utwo/sandbox-frontend:ae6473"
+          image: "ghcr.io/utwo/sandbox-frontend:ae64735"
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
