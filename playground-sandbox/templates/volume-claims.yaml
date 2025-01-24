@@ -1,0 +1,29 @@
+---
+# Source: playground-sandbox/templates/volume-claims.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: projects-pv-claim-default
+spec:
+  storageClassName: local-path
+  volumeName: "playground-sandbox-staging-fileserver"
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+# Source: playground-sandbox/templates/volume-claims.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: projects-pv-claim-public
+  namespace: public-staging
+spec:
+  storageClassName: local-path
+  volumeName: "playground-sandbox-staging-fileserver-public"
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi

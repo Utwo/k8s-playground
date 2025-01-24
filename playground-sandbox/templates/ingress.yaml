@@ -1,0 +1,60 @@
+---
+# Source: playground-sandbox/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: playground-sandbox-staging
+  labels:
+    helm.sh/chart: playground-sandbox-0.1.0
+    app.kubernetes.io/name: playground-sandbox
+    app.kubernetes.io/instance: playground-sandbox-staging
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  ingressClassName: nginx
+  defaultBackend:
+    service:
+      name: frontend
+      port:
+        name: http
+  rules:
+    - host: staging.127.0.0.1.nip.io
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: frontend
+                port:
+                  name: http
+    - host: api.staging.127.0.0.1.nip.io
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: backend
+                port:
+                  name: http
+    - host: "*.project.staging.127.0.0.1.nip.io"
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: nginx
+                port:
+                  name: ng-sandbox-port
+    - host: "*.vscode.staging.127.0.0.1.nip.io"
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: nginx
+                port:
+                  name: ng-vscode-port

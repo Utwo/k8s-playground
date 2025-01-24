@@ -1,0 +1,6 @@
+---
+# Source: playground-sandbox/templates/public-ns.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: public-staging

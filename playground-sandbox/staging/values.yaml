@@ -1,0 +1,16 @@
+backend:
+  replicaCount: 0
+
+volumeClaimDefault:
+  backend:
+    hostPath:
+      path: "/tmp/k3dvol/staging"
+volumeClaimPublic:
+  backend:
+    hostPath:
+      path: "/tmp/k3dvol/staging"
+
+sandboxNamespace: "public-staging"
+
+ingress:
+  domain: "staging.127.0.0.1.nip.io"
