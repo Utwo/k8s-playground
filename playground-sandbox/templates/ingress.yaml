@@ -3,7 +3,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: playground-sandbox-dev
+  name: playground-sandbox
   labels:
     helm.sh/chart: playground-sandbox-0.1.0
     app.kubernetes.io/name: playground-sandbox
