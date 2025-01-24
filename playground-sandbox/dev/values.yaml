@@ -1,0 +1,13 @@
+volumeClaimDefault:
+  backend:
+    hostPath:
+      path: "/tmp/k3dvol/dev"
+volumeClaimPublic:
+  backend:
+    hostPath:
+      path: "/tmp/k3dvol/dev"
+
+sandboxNamespace: "public-dev"
+
+ingress:
+  domain: "dev.127.0.0.1.nip.io"

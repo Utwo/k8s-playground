@@ -1,0 +1,28 @@
+---
+# Source: playground-sandbox/templates/nginx/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+  labels:
+    helm.sh/chart: playground-sandbox-0.1.0
+    app.kubernetes.io/name: playground-sandbox
+    app.kubernetes.io/instance: playground-sandbox
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+    app: nginx
+spec:
+  type: ClusterIP
+  ports:
+    - port: 3000
+      targetPort: 3000
+      protocol: TCP
+      name: ng-sandbox-port
+    - port: 3773
+      targetPort: 3773
+      protocol: TCP
+      name: ng-vscode-port
+  selector:
+    app.kubernetes.io/name: playground-sandbox
+    app.kubernetes.io/instance: playground-sandbox
+    app: nginx

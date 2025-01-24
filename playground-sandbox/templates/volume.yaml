@@ -1,0 +1,30 @@
+---
+# Source: playground-sandbox/templates/volume.yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: "playground-sandbox-fileserver"
+spec:
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: local-path
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /tmp/k3dvol/dev
+---
+# Source: playground-sandbox/templates/volume.yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: "playground-sandbox-fileserver-public"
+spec:
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: local-path
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /tmp/k3dvol/dev
