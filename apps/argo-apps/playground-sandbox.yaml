@@ -36,8 +36,6 @@ spec:
               - $values/apps/playground-sandbox/common/values.yaml
               - $values/apps/playground-sandbox/envs/{{ .path.basename }}/values.yaml
             parameters:
-              - name: backend.env[0].value
-                value: $ARGOCD_APP_REVISION_SHORT
               - name: backend.image.tag
                 value: $ARGOCD_APP_REVISION_SHORT
               - name: frontend.image.tag

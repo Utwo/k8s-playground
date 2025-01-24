@@ -1,8 +1,5 @@
 backend:
   replicaCount: 0
-  env:
-    - name: SERVICE_VERSION
-      value: $ARGOCD_APP_REVISION_SHORT
 
 volumeClaimDefault:
   backend:

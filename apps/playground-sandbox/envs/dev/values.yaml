@@ -1,8 +1,3 @@
-backend:
-  env:
-    - name: SERVICE_VERSION
-      value: $ARGOCD_APP_REVISION_SHORT
-
 volumeClaimDefault:
   backend:
     hostPath:
