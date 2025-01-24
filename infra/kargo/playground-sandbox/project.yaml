@@ -1,0 +1,13 @@
+apiVersion: kargo.akuity.io/v1alpha1
+kind: Project
+metadata:
+  name: playground-sandbox
+  annotations:
+    # This annotation ensures Projects (Namespaces) are created first when deployed via Argo CD
+    argocd.argoproj.io/sync-wave: "-1"
+spec:
+  promotionPolicies:
+    - stage: dev
+      autoPromotionEnabled: true
+    - stage: staging
+      autoPromotionEnabled: true

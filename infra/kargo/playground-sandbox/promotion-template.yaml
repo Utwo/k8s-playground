@@ -1,0 +1,77 @@
+apiVersion: kargo.akuity.io/v1alpha1
+kind: PromotionTask
+metadata:
+  name: promote-app
+spec:
+  vars:
+    - name: gitOpsRepo
+      value: https://github.com/Utwo/k8s-playground.git
+    - name: gitRepo
+      value: https://github.com/Utwo/playground-sandbox.git
+    - name: srcPath
+      value: ./src
+    - name: outPath
+      value: ./out
+    - name: applicationName
+  steps:
+    - uses: git-clone
+      config:
+        repoURL: ${{ vars.gitOpsRepo }}
+        checkout:
+          - branch: main
+            path: ${{ vars.srcPath }}
+          - branch: stage/${{ ctx.stage }}
+            create: true
+            path: ${{ vars.outPath }}
+    - uses: git-clone
+      config:
+        repoURL: ${{ vars.gitRepo }}
+        checkout:
+          - commit: ${{ commitFrom(vars.gitRepo).ID }}
+            path: ${{ vars.srcPath }}/repos/${{ vars.applicationName }}-repo
+    - uses: git-clear
+      config:
+        path: ${{ vars.outPath }}
+    - uses: yaml-update
+      as: update-image
+      config:
+        path: ${{ vars.srcPath }}/apps/${{ vars.applicationName }}/envs/${{ ctx.stage }}/values.yaml
+        updates:
+          - key: backend.image.tag
+            value: ${{ commitFrom(vars.gitopsRepo).ID }}
+          - key: frontend.image.tag
+            value: ${{ commitFrom(vars.gitopsRepo).ID }}
+    - uses: helm-template
+      config:
+        path: ${{ vars.srcPath }}/repos/${{ vars.applicationName }}-repo/helm/charts/${{ vars.applicationName }}
+        releaseName: ${{ vars.applicationName }}
+        namespace: ${{ vars.applicationName }}-${{ ctx.stage }}
+        kubeVersion: 1.30.0
+        valuesFiles:
+          - ${{ vars.srcPath }}/apps/${{ vars.applicationName }}/common/values.yaml
+          - ${{ vars.srcPath }}/apps/${{ vars.applicationName }}/envs/${{ ctx.stage }}/values.yaml
+        outPath: ${{ vars.outPath }}
+    - uses: copy
+      config:
+        inPath: ${{ vars.srcPath }}/apps/${{ vars.applicationName }}/common
+        outPath: ${{ vars.outPath }}/${{ vars.applicationName }}/common
+    - uses: copy
+      config:
+        inPath: ${{ vars.srcPath }}/apps/${{ vars.applicationName }}/envs/${{ ctx.stage }}
+        outPath: ${{ vars.outPath }}/${{ vars.applicationName }}/${{ ctx.stage }}
+    - uses: git-commit
+      as: commit
+      config:
+        path: ${{ vars.outPath }}
+        messageFromSteps:
+          - update-image
+    - uses: git-push
+      config:
+        path: ${{ vars.outPath }}
+    - uses: argocd-update
+      config:
+        apps:
+          - name: ${{ ctx.project }}-${{ ctx.stage }}
+            sources:
+              - repoURL: ${{ vars.gitopsRepo }}
+                desiredRevision: ${{ outputs.commit.commit }}

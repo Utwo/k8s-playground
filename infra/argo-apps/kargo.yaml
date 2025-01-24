@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kargo
+  namespace: argocd
+spec:
+  project: infra
+  sources:
+    - chart: kargo
+      repoURL: ghcr.io/akuity/kargo-charts
+      targetRevision: 1.2.0
+      helm:
+        valuesObject:
+          api:
+            host: kargo.127.0.0.1.nip.io
+            secretManagementEnabled: false
+            argocd:
+              urls:
+                - https://argocd.127.0.0.1.nip.io
+            secret:
+              name: admin-secret
+    - repoURL: https://github.com/Utwo/k8s-playground
+      path: ./infra/kargo
+      targetRevision: HEAD
+      directory:
+        recurse: true
+  destination:
+    namespace: kargo
+    name: in-cluster
+  syncPolicy:
+    automated: {}
+    syncOptions:
+      - CreateNamespace=true

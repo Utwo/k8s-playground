@@ -1,0 +1,85 @@
+apiVersion: kargo.akuity.io/v1alpha1
+kind: Stage
+metadata:
+  name: dev
+spec:
+  requestedFreight:
+    - origin:
+        kind: Warehouse
+        name: playground-sandbox
+      sources:
+        direct: true
+  promotionTemplate:
+    spec:
+      vars:
+        - name: gitOpsRepo
+          value: https://github.com/Utwo/k8s-playground.git
+        - name: gitRepo
+          value: https://github.com/Utwo/playground-sandbox.git
+        - name: srcPath
+          value: ./src
+        - name: outPath
+          value: ./out
+      steps:
+        - task:
+            name: promote-app
+---
+apiVersion: kargo.akuity.io/v1alpha1
+kind: Stage
+metadata:
+  name: staging
+spec:
+  requestedFreight:
+    - origin:
+        kind: Warehouse
+        name: playground-sandbox
+      sources:
+        stages:
+          - dev
+  promotionTemplate:
+    spec:
+      vars:
+        - name: gitOpsRepo
+          value: https://github.com/Utwo/k8s-playground.git
+        - name: gitRepo
+          value: https://github.com/Utwo/playground-sandbox.git
+        - name: srcPath
+          value: ./src
+        - name: outPath
+          value: ./out
+      steps:
+        - task:
+            name: promote-app
+  verification:
+    analysisTemplates:
+      - name: success-rate-staging
+---
+apiVersion: kargo.akuity.io/v1alpha1
+kind: Stage
+metadata:
+  name: production
+spec:
+  requestedFreight:
+    - origin:
+        kind: Warehouse
+        name: playground-sandbox
+      sources:
+        stages:
+          - staging
+  promotionTemplate:
+    spec:
+      vars:
+        - name: gitOpsRepo
+          value: https://github.com/Utwo/k8s-playground.git
+        - name: gitRepo
+          value: https://github.com/Utwo/playground-sandbox.git
+        - name: srcPath
+          value: ./src
+        - name: outPath
+          value: ./out
+      steps:
+        - task:
+            name: promote-app
+  verification:
+    analysisTemplates:
+      - name: success-rate-production
