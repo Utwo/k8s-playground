@@ -7,7 +7,7 @@ metadata:
   labels:
     helm.sh/chart: playground-sandbox-0.1.0
     app.kubernetes.io/name: playground-sandbox
-    app.kubernetes.io/instance: playground-sandbox
+    app.kubernetes.io/instance: playground-sandbox-dev
     app.kubernetes.io/version: "1.16.0"
     app.kubernetes.io/managed-by: Helm
     app: backend
@@ -16,14 +16,14 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: playground-sandbox
-      app.kubernetes.io/instance: playground-sandbox
+      app.kubernetes.io/instance: playground-sandbox-dev
       app: backend
   template:
     metadata:
       labels:
         helm.sh/chart: playground-sandbox-0.1.0
         app.kubernetes.io/name: playground-sandbox
-        app.kubernetes.io/instance: playground-sandbox
+        app.kubernetes.io/instance: playground-sandbox-dev
         app.kubernetes.io/version: "1.16.0"
         app.kubernetes.io/managed-by: Helm
         app: backend

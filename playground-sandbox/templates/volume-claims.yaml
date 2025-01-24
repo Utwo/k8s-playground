@@ -6,7 +6,7 @@ metadata:
   name: projects-pv-claim-default
 spec:
   storageClassName: local-path
-  volumeName: "playground-sandbox-fileserver"
+  volumeName: "playground-sandbox-dev-fileserver"
   accessModes:
     - ReadWriteOnce
   resources:
@@ -21,7 +21,7 @@ metadata:
   namespace: public-dev
 spec:
   storageClassName: local-path
-  volumeName: "playground-sandbox-fileserver-public"
+  volumeName: "playground-sandbox-dev-fileserver-public"
   accessModes:
     - ReadWriteOnce
   resources:
