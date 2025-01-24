@@ -22,8 +22,6 @@ spec:
     - repoURL: https://github.com/Utwo/k8s-playground
       path: ./infra/kargo
       targetRevision: HEAD
-      directory:
-        recurse: true
   destination:
     namespace: kargo
     name: in-cluster

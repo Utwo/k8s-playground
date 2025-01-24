@@ -2,6 +2,7 @@ apiVersion: kargo.akuity.io/v1alpha1
 kind: Warehouse
 metadata:
   name: playground-sandbox
+  namespace: kargo-project-playground-sandbox
 spec:
   subscriptions:
     # - image:

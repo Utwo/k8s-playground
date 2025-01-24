@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: kargo-projects
+  namespace: argocd
+spec:
+  goTemplate: true
+  generators:
+    - git:
+        repoURL: https://github.com/Utwo/k8s-playground
+        revision: HEAD
+        directories:
+          - path: infra/kargo/projects/*
+  template:
+    metadata:
+      name: kargo-project-{{ .path.basename }}
+      namespace: argocd
+    spec:
+      project: infra
+      sources:
+        - repoURL: https://github.com/Utwo/k8s-playground
+          path: ./infra/kargo/projects/{{ .path.basename }}
+          targetRevision: HEAD
+      destination:
+        namespace: kargo-project-{{ .path.basename }}
+        name: in-cluster
+      syncPolicy:
+        automated: {}

@@ -2,6 +2,7 @@ apiVersion: kargo.akuity.io/v1alpha1
 kind: Stage
 metadata:
   name: dev
+  namespace: kargo-project-playground-sandbox
 spec:
   requestedFreight:
     - origin:
@@ -20,6 +21,8 @@ spec:
           value: ./src
         - name: outPath
           value: ./out
+        - name: applicationName
+          value: playground-sandbox
       steps:
         - task:
             name: promote-app
@@ -28,6 +31,7 @@ apiVersion: kargo.akuity.io/v1alpha1
 kind: Stage
 metadata:
   name: staging
+  namespace: kargo-project-playground-sandbox
 spec:
   requestedFreight:
     - origin:
@@ -47,6 +51,8 @@ spec:
           value: ./src
         - name: outPath
           value: ./out
+        - name: applicationName
+          value: playground-sandbox
       steps:
         - task:
             name: promote-app
@@ -58,6 +64,7 @@ apiVersion: kargo.akuity.io/v1alpha1
 kind: Stage
 metadata:
   name: production
+  namespace: kargo-project-playground-sandbox
 spec:
   requestedFreight:
     - origin:
@@ -77,6 +84,8 @@ spec:
           value: ./src
         - name: outPath
           value: ./out
+        - name: applicationName
+          value: playground-sandbox
       steps:
         - task:
             name: promote-app

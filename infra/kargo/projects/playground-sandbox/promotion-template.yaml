@@ -2,6 +2,7 @@ apiVersion: kargo.akuity.io/v1alpha1
 kind: PromotionTask
 metadata:
   name: promote-app
+  namespace: kargo-project-playground-sandbox
 spec:
   vars:
     - name: gitOpsRepo
