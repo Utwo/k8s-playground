@@ -1,0 +1,66 @@
+---
+# Source: playground-sandbox/templates/nginx/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+  labels:
+    helm.sh/chart: playground-sandbox-0.1.0
+    app.kubernetes.io/name: playground-sandbox
+    app.kubernetes.io/instance: playground-sandbox-production
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+    app: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: playground-sandbox
+      app.kubernetes.io/instance: playground-sandbox-production
+      app: nginx
+  template:
+    metadata:
+      annotations:
+        checksum/config: b9d8bdc820f5a43ea3a625f427c21c3257f7c692424b154400d4aa7b6ff4344a
+      labels:
+        helm.sh/chart: playground-sandbox-0.1.0
+        app.kubernetes.io/name: playground-sandbox
+        app.kubernetes.io/instance: playground-sandbox-production
+        app.kubernetes.io/version: "1.16.0"
+        app.kubernetes.io/managed-by: Helm
+        app: nginx
+    spec:
+      securityContext:
+        {}
+      containers:
+        - name: app
+          securityContext:
+            {}
+          image: "nginx:latest"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: ng-sandbox-port
+              containerPort: 3000
+              protocol: TCP
+            - name: ng-vscode-port
+              containerPort: 3773
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: ng-sandbox-port
+          resources:
+            {}
+          volumeMounts:
+            - mountPath: /etc/nginx  # mount nginx-conf volumn to /etc/nginx
+              readOnly: true
+              name: nginx-conf
+      volumes:
+        - name: nginx-conf
+          configMap:
+            name: nginx-conf  # place ConfigMap `nginx-conf` on /etc/nginx
+            items:
+              - key: nginx.conf
+                path: nginx.conf
+      nodeSelector:
+        node: default

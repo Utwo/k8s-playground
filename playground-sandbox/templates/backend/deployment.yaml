@@ -1,0 +1,80 @@
+---
+# Source: playground-sandbox/templates/backend/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  labels:
+    helm.sh/chart: playground-sandbox-0.1.0
+    app.kubernetes.io/name: playground-sandbox
+    app.kubernetes.io/instance: playground-sandbox-production
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+    app: backend
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: playground-sandbox
+      app.kubernetes.io/instance: playground-sandbox-production
+      app: backend
+  template:
+    metadata:
+      labels:
+        helm.sh/chart: playground-sandbox-0.1.0
+        app.kubernetes.io/name: playground-sandbox
+        app.kubernetes.io/instance: playground-sandbox-production
+        app.kubernetes.io/version: "1.16.0"
+        app.kubernetes.io/managed-by: Helm
+        app: backend
+    spec:
+      serviceAccountName: internal-kubectl
+      securityContext:
+        {}
+      containers:
+        - name: app
+          securityContext:
+            {}
+          image: "ghcr.io/utwo/sandbox-backend:edc3939"
+          imagePullPolicy: IfNotPresent
+          workingDir: /app
+          env:
+            - name: SANDBOX_NODE_LABEL
+              value: default
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: http://otel-collector.172.20.0.3.nip.io
+            - name: OTEL_EXPORTER_OTLP_TRACES_HEADERS
+              valueFrom:
+                secretKeyRef:
+                  key: OTEL_EXPORTER_OTLP_TRACES_HEADERS
+                  name: playground-sandbox
+            - name: SANDBOX_NAMESPACE
+              value: public-production
+            - name: SERVICE_VERSION
+              value: edc3939
+          ports:
+            - name: http
+              containerPort: 8888
+              protocol: TCP
+            - name: metrics
+              containerPort: 9464
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {}
+          volumeMounts:
+            - mountPath: /app/projects
+              name: project-pv-storage
+      volumes:
+        - name: project-pv-storage
+          persistentVolumeClaim:
+            claimName: projects-pv-claim-default
+      nodeSelector:
+        node: default

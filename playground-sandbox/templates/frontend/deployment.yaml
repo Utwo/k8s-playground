@@ -1,0 +1,54 @@
+---
+# Source: playground-sandbox/templates/frontend/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  labels:
+    helm.sh/chart: playground-sandbox-0.1.0
+    app.kubernetes.io/name: playground-sandbox
+    app.kubernetes.io/instance: playground-sandbox-production
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+    app: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: playground-sandbox
+      app.kubernetes.io/instance: playground-sandbox-production
+      app: frontend
+  template:
+    metadata:
+      labels:
+        helm.sh/chart: playground-sandbox-0.1.0
+        app.kubernetes.io/name: playground-sandbox
+        app.kubernetes.io/instance: playground-sandbox-production
+        app.kubernetes.io/version: "1.16.0"
+        app.kubernetes.io/managed-by: Helm
+        app: frontend
+    spec:
+      securityContext:
+        {}
+      containers:
+        - name: app
+          securityContext:
+            {}
+          image: "ghcr.io/utwo/sandbox-frontend:edc3939"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {}
+      nodeSelector:
+        node: default

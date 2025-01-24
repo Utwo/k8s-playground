@@ -1,0 +1,24 @@
+---
+# Source: playground-sandbox/templates/frontend/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  labels:
+    helm.sh/chart: playground-sandbox-0.1.0
+    app.kubernetes.io/name: playground-sandbox
+    app.kubernetes.io/instance: playground-sandbox-production
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+    app: frontend
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: playground-sandbox
+    app.kubernetes.io/instance: playground-sandbox-production
+    app: frontend
