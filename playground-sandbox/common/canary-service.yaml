@@ -10,5 +10,4 @@ spec:
       targetPort: http
   selector:
     app: backend
-    app.kubernetes.io/instance: playground-sandbox
     app.kubernetes.io/name: playground-sandbox
