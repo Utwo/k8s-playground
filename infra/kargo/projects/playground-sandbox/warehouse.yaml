@@ -12,3 +12,8 @@ spec:
     - git:
         repoURL: https://github.com/Utwo/playground-sandbox.git
         branch: main
+    - git:
+        repoURL: https://github.com/Utwo/k8s-playground.git
+        branch: main
+        includePaths:
+          - apps/playground-sandbox
