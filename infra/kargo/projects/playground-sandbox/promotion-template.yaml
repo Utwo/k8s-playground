@@ -39,9 +39,9 @@ spec:
         path: ${{ vars.srcPath }}/repos/${{ vars.applicationName }}-repo/helm/charts/${{ vars.applicationName }}/values.yaml
         updates:
           - key: backend.image.tag
-            value: ${{ commitFrom(vars.gitRepo).ID }}
+            value: ${{ commitFrom(vars.gitRepo).ID[0:7] }}
           - key: frontend.image.tag
-            value: ${{ commitFrom(vars.gitRepo).ID }}
+            value: ${{ commitFrom(vars.gitRepo).ID[0:7] }}
     - uses: helm-template
       config:
         path: ${{ vars.srcPath }}/repos/${{ vars.applicationName }}-repo/helm/charts/${{ vars.applicationName }}

@@ -24,7 +24,7 @@ spec:
         startingStep: 2 # delay starting analysis run until setWeight: 15%
         args:
           - name: ingress
-            value: playground-sandbox
+            value: playground-sandbox-staging
           - name: namespace
             value: playground-sandbox-staging
       # Reference to a Service which the controller will update to point to the canary ReplicaSet
