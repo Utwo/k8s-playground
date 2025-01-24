@@ -1,50 +1,50 @@
 apiVersion: argoproj.io/v1alpha1
-kind: Application
+kind: ApplicationSet
 metadata:
   name: playground-sandbox
   namespace: argocd
 spec:
-  project: apps
-  sources:
-    - repoURL: https://github.com/Utwo/k8s-playground
-      path: apps/playground-sandbox
-      targetRevision: HEAD
-    - repoURL: https://github.com/Utwo/playground-sandbox
-      path: ./helm/charts/playground-sandbox
-      targetRevision: HEAD
-      helm:
-        valuesObject:
-          backend:
-            replicaCount: 0
-            serviceMonitor:
-              enabled: true
-              additionalLabels:
-                release: kube-prometheus-stack-k3d-apps
-            env:
-              - name: SERVICE_VERSION
+  goTemplate: true
+  generators:
+    - git:
+        repoURL: https://github.com/Utwo/k8s-playground
+        revision: HEAD
+        directories:
+          - path: apps/playground-sandbox/envs/*
+  template:
+    metadata:
+      name: playground-sandbox-{{ .path.basename }}
+      annotations:
+        kargo.akuity.io/authorized-stage: playground-sandbox:{{ .path.basename }}
+    spec:
+      project: apps
+      sources:
+        - repoURL: https://github.com/Utwo/k8s-playground
+          path: apps/playground-sandbox/common
+          targetRevision: HEAD
+        - repoURL: https://github.com/Utwo/k8s-playground
+          path: apps/playground-sandbox/envs/{{ .path.basename }}
+          targetRevision: HEAD
+          ref: values
+          directory:
+            recurse: true
+        - repoURL: https://github.com/Utwo/playground-sandbox
+          path: ./helm/charts/playground-sandbox
+          targetRevision: HEAD
+          helm:
+            valueFiles:
+              - $values/apps/playground-sandbox/common/values.yaml
+              - $values/apps/playground-sandbox/envs/{{ .path.basename }}/values.yaml
+            parameters:
+              - name: backend.env[0].value
                 value: $ARGOCD_APP_REVISION_SHORT
-              - name: SANDBOX_NODE_LABEL
-                value: "default"
-              - name: OTEL_EXPORTER_OTLP_ENDPOINT
-                value: "http://otel-collector.172.20.0.3.nip.io"
-              - name: OTEL_EXPORTER_OTLP_TRACES_HEADERS
-                valueFrom:
-                  secretKeyRef:
-                    name: playground-sandbox
-                    key: OTEL_EXPORTER_OTLP_TRACES_HEADERS
-        parameters:
-          - name: backend.env[0].value
-            value: $ARGOCD_APP_REVISION_SHORT
-          - name: backend.image.tag
-            value: $ARGOCD_APP_REVISION_SHORT
-          - name: frontend.image.tag
-            value: $ARGOCD_APP_REVISION_SHORT
-          - name: ingress.className
-            value: "nginx"
-  destination:
-    name: k3d-apps
-    namespace: playground-sandbox
-  syncPolicy:
-    automated: {}
-    syncOptions:
-      - CreateNamespace=true
+              - name: backend.image.tag
+                value: $ARGOCD_APP_REVISION_SHORT
+              - name: frontend.image.tag
+                value: $ARGOCD_APP_REVISION_SHORT
+      destination:
+        name: k3d-apps
+        namespace: playground-sandbox-{{ .path.basename }}
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true

@@ -1,0 +1,19 @@
+backend:
+  replicaCount: 0
+  env:
+    - name: SERVICE_VERSION
+      value: $ARGOCD_APP_REVISION_SHORT
+
+volumeClaimDefault:
+  backend:
+    hostPath:
+      path: "/tmp/k3dvol/production"
+volumeClaimPublic:
+  backend:
+    hostPath:
+      path: "/tmp/k3dvol/production"
+
+sandboxNamespace: "public-production"
+
+ingress:
+  domain: "127.0.0.1.nip.io"

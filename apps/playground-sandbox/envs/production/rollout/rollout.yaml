@@ -25,6 +25,8 @@ spec:
         args:
           - name: ingress
             value: playground-sandbox
+          - name: namespace
+            value: playground-sandbox-production
       # Reference to a Service which the controller will update to point to the canary ReplicaSet
       canaryService: backend-canary
       # Reference to a Service which the controller will update to point to the stable ReplicaSet

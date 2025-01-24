@@ -1,0 +1,51 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: playground-sandbox
+spec:
+  selector:
+    matchLabels:
+      app: backend
+      app.kubernetes.io/name: playground-sandbox
+  workloadRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: backend
+    scaleDown: progressively
+  minReadySeconds: 15
+  strategy:
+    canary:
+      # An AnalysisTemplate is referenced here, which starts an AnalysisRun as soon as the update
+      # begins. The run is terminated when the update completes. A failure/error of the analysis
+      # will cause the rollout's update to abort, and set the canary weight to zero.
+      analysis:
+        templates:
+          - templateName: success-rate
+        startingStep: 2 # delay starting analysis run until setWeight: 15%
+        args:
+          - name: ingress
+            value: playground-sandbox
+          - name: namespace
+            value: playground-sandbox-staging
+      # Reference to a Service which the controller will update to point to the canary ReplicaSet
+      canaryService: backend-canary
+      # Reference to a Service which the controller will update to point to the stable ReplicaSet
+      stableService: backend
+      trafficRouting:
+        nginx:
+          stableIngress: playground-sandbox
+      steps:
+        - setWeight: 5
+        - pause:
+            duration: 1m
+        - setWeight: 15
+        - pause:
+            duration: 1m
+        - setWeight: 50
+        - pause:
+            duration: 1m
+        - setWeight: 75
+        - pause:
+            duration: 1m
+        - setWeight: 100
+  revisionHistoryLimit: 2
