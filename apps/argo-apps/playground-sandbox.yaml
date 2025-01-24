@@ -15,31 +15,33 @@ spec:
     metadata:
       name: playground-sandbox-{{ .path.basename }}
       annotations:
-        kargo.akuity.io/authorized-stage: playground-sandbox:{{ .path.basename }}
+        kargo.akuity.io/authorized-stage: kargo-project-playground-sandbox:{{ .path.basename }}
     spec:
       project: apps
       sources:
         - repoURL: https://github.com/Utwo/k8s-playground
-          path: apps/playground-sandbox/common
-          targetRevision: HEAD
-        - repoURL: https://github.com/Utwo/k8s-playground
-          path: apps/playground-sandbox/envs/{{ .path.basename }}
-          targetRevision: HEAD
-          ref: values
+          path: playground-sandbox
+          targetRevision: stage/{{ .path.basename }}
           directory:
             recurse: true
-        - repoURL: https://github.com/Utwo/playground-sandbox
-          path: ./helm/charts/playground-sandbox
-          targetRevision: HEAD
-          helm:
-            valueFiles:
-              - $values/apps/playground-sandbox/common/values.yaml
-              - $values/apps/playground-sandbox/envs/{{ .path.basename }}/values.yaml
-            parameters:
-              - name: backend.image.tag
-                value: $ARGOCD_APP_REVISION_SHORT
-              - name: frontend.image.tag
-                value: $ARGOCD_APP_REVISION_SHORT
+        # - repoURL: https://github.com/Utwo/k8s-playground
+        #   path: apps/playground-sandbox/envs/{{ .path.basename }}
+        #   targetRevision: HEAD
+        #   ref: values
+        #   directory:
+        #     recurse: true
+        # - repoURL: https://github.com/Utwo/playground-sandbox
+        #   path: ./helm/charts/playground-sandbox
+        #   targetRevision: HEAD
+        #   helm:
+        #     valueFiles:
+        #       - $values/apps/playground-sandbox/common/values.yaml
+        #       - $values/apps/playground-sandbox/envs/{{ .path.basename }}/values.yaml
+        #     parameters:
+        #       - name: backend.image.tag
+        #         value: $ARGOCD_APP_REVISION_SHORT
+        #       - name: frontend.image.tag
+        #         value: $ARGOCD_APP_REVISION_SHORT
       destination:
         name: k3d-apps
         namespace: playground-sandbox-{{ .path.basename }}

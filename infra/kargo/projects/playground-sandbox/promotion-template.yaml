@@ -6,7 +6,7 @@ metadata:
 spec:
   vars:
     - name: gitOpsRepo
-      value: https://github.com/Utwo/k8s-playground.git
+      value: https://github.com/Utwo/k8s-playground
     - name: gitRepo
       value: https://github.com/Utwo/playground-sandbox.git
     - name: srcPath
@@ -45,7 +45,7 @@ spec:
     - uses: helm-template
       config:
         path: ${{ vars.srcPath }}/repos/${{ vars.applicationName }}-repo/helm/charts/${{ vars.applicationName }}
-        releaseName: ${{ vars.applicationName }}
+        releaseName: ${{ vars.applicationName }}-${{ ctx.stage }}
         namespace: ${{ vars.applicationName }}-${{ ctx.stage }}
         kubeVersion: 1.30.0
         valuesFiles:
@@ -73,7 +73,7 @@ spec:
     - uses: argocd-update
       config:
         apps:
-          - name: ${{ ctx.project }}-${{ ctx.stage }}
+          - name: ${{ vars.applicationName }}-${{ ctx.stage }}
             sources:
-              - repoURL: ${{ vars.gitopsRepo }}
+              - repoURL: ${{ vars.gitOpsRepo }}
                 desiredRevision: ${{ task.outputs['commit'].commit }}
