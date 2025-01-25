@@ -6,15 +6,19 @@ spec:
   args:
     - name: ingress
     - name: namespace
+    - name: interval
+      value: 10s
+    - name: success-rate-threshold
+      value: 0.90
     - name: PROMETHEUS_AUTH_TOKEN
       valueFrom:
         secretKeyRef:
-          name: playground-sandbox
+          name: prometheus-auth-token
           key: PROMETHEUS_AUTH_TOKEN
   metrics:
     - name: success-rate
-      interval: 10s
-      successCondition: len(result) == 0 || result[0] > 0.90
+      interval: "{{ args.interval }}"
+      successCondition: len(result) == 0 || result[0] > {{ args.successRateThreshold }}
       provider:
         prometheus:
           address: http://collector.172.20.0.5.nip.io
