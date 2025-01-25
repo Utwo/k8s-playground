@@ -13,7 +13,7 @@ spec:
     - name: PROMETHEUS_AUTH_TOKEN
       valueFrom:
         secretKeyRef:
-          name: prometheus-auth-token
+          name: playground-sandbox
           key: PROMETHEUS_AUTH_TOKEN
   metrics:
     - name: success-rate
