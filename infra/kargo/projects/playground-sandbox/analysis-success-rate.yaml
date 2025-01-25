@@ -8,7 +8,7 @@ spec:
     - name: namespace
     - name: interval
       value: 10s
-    - name: success-rate-threshold
+    - name: successRateThreshold
       value: "0.90"
     - name: PROMETHEUS_AUTH_TOKEN
       valueFrom:
