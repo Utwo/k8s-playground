@@ -58,7 +58,14 @@ spec:
             name: promote-app
   verification:
     analysisTemplates:
-      - name: success-rate-staging
+      - name: success-rate
+    args:
+      - name: interval
+        value: 60s
+      - name: ingress
+        value: playground-sandbox
+      - name: namespace
+        value: playground-sandbox-staging
 ---
 apiVersion: kargo.akuity.io/v1alpha1
 kind: Stage
@@ -91,4 +98,11 @@ spec:
             name: promote-app
   verification:
     analysisTemplates:
-      - name: success-rate-production
+      - name: success-rate
+    args:
+      - name: interval
+        value: 60s
+      - name: ingress
+        value: playground-sandbox
+      - name: namespace
+        value: playground-sandbox-production
