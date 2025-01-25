@@ -14,5 +14,9 @@ backend:
           name: playground-sandbox
           key: OTEL_EXPORTER_OTLP_TRACES_HEADERS
 
+frontend:
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
+
 ingress:
   className: nginx
