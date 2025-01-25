@@ -1,0 +1,34 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  name: success-rate
+spec:
+  args:
+    - name: ingress
+    - name: namespace
+    - name: interval
+      value: 10s
+    - name: success-rate-threshold
+      value: "0.90"
+    - name: PROMETHEUS_AUTH_TOKEN
+      valueFrom:
+        secretKeyRef:
+          name: prometheus-auth-token
+          key: PROMETHEUS_AUTH_TOKEN
+  metrics:
+    - name: success-rate
+      interval: "{{ args.interval }}"
+      successCondition: len(result) == 0 || result[0] > {{ args.successRateThreshold }}
+      provider:
+        prometheus:
+          address: http://collector.172.20.0.5.nip.io
+          insecure: true
+          headers:
+            - key: Authorization
+              value: Bearer {{ args.PROMETHEUS_AUTH_TOKEN }}
+          query: >+
+            sum(
+              rate(nginx_ingress_controller_requests{ingress="{{args.ingress}}",namespace="{{args.namespace}}",status!~"[4-5].*"}[20s]))
+              /
+              sum(rate(nginx_ingress_controller_requests{ingress="{{args.ingress}}",namespace="{{args.namespace}}"}[20s])
+            )
