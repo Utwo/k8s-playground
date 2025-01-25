@@ -28,7 +28,7 @@ spec:
               value: Bearer {{ args.PROMETHEUS_AUTH_TOKEN }}
           query: >+
             sum(
-              rate(nginx_ingress_controller_requests{ingress="{{args.ingress}}",namespace="{{args.namespace}}",status!~"[4-5].*"}[20s]))
+              rate(nginx_ingress_controller_requests{ingress="{{args.ingress}}",exported_namespace="{{args.namespace}}",status!~"[4-5].*"}[20s]))
               /
-              sum(rate(nginx_ingress_controller_requests{ingress="{{args.ingress}}",namespace="{{args.namespace}}"}[20s])
+              sum(rate(nginx_ingress_controller_requests{ingress="{{args.ingress}}",exported_namespace="{{args.namespace}}"}[20s])
             )
