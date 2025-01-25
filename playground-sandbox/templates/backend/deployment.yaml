@@ -35,7 +35,7 @@ spec:
         - name: app
           securityContext:
             {}
-          image: "ghcr.io/utwo/sandbox-backend:edc3939"
+          image: "ghcr.io/utwo/sandbox-backend:2345dfe"
           imagePullPolicy: IfNotPresent
           workingDir: /app
           env:
@@ -51,7 +51,7 @@ spec:
             - name: SANDBOX_NAMESPACE
               value: public-staging
             - name: SERVICE_VERSION
-              value: edc3939
+              value: 2345dfe
           ports:
             - name: http
               containerPort: 8888
