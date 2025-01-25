@@ -61,7 +61,7 @@ spec:
       - name: success-rate
     args:
       - name: interval
-        value: 60s
+        value: 10s
       - name: ingress
         value: playground-sandbox
       - name: namespace
@@ -101,7 +101,7 @@ spec:
       - name: success-rate
     args:
       - name: interval
-        value: 60s
+        value: 10s
       - name: ingress
         value: playground-sandbox
       - name: namespace
