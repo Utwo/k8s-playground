@@ -1,0 +1,37 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: windmill
+  namespace: argocd
+spec:
+  project: services
+  source:
+    chart: windmill
+    repoURL: https://windmill-labs.github.io/windmill-helm-charts/
+    targetRevision: 2.0.353
+    helm:
+      valuesObject:
+        windmill:
+          appReplicas: 1
+          lspReplicas: 1
+          workerGroups:
+            - name: "default"
+              replicas: 1
+              resources:
+                requests:
+                  memory: 0
+        ingress:
+          enabled: false
+        postgresql:
+          primary:
+            resources:
+              requests:
+                cpu: 0
+                memory: 0
+  destination:
+    name: "in-cluster"
+    namespace: windmill
+  syncPolicy:
+    automated: {}
+    syncOptions:
+      - CreateNamespace=true
