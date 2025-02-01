@@ -35,6 +35,14 @@ dashboardProviders:
         editable: true
         options:
           path: /var/lib/grafana/dashboards/vm
+      - name: "trivy"
+        orgId: 1
+        folder: "trivy"
+        type: file
+        disableDeletion: false
+        editable: true
+        options:
+          path: /var/lib/grafana/dashboards/trivy
 
 dashboards:
   vm:
@@ -44,6 +52,10 @@ dashboards:
     VMSingle:
       gnetId: 10229
       revision: 37
+  trivy:
+    trivy-operator:
+      gnetId: 17813
+      revision: 2
 
 grafana.ini:
   server:

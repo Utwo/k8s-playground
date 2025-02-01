@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argo-apps-services
+  namespace: argocd
+spec:
+  project: services
+  source:
+    path: services/argo-apps
+    repoURL: https://github.com/Utwo/k8s-playground
+    targetRevision: HEAD
+  destination:
+    namespace: argocd
+    name: in-cluster
+  syncPolicy:
+    automated: {}

@@ -36,7 +36,22 @@ spec:
   clusterResourceWhitelist:
     - group: "*"
       kind: "*"
-  description: Applications
+  description: Applications owned by us
+  destinations:
+    - namespace: "*"
+      server: "*"
+  sourceRepos:
+    - "*"
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: services
+spec:
+  clusterResourceWhitelist:
+    - group: "*"
+      kind: "*"
+  description: External services
   destinations:
     - namespace: "*"
       server: "*"
