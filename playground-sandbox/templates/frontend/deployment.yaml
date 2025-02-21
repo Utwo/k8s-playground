@@ -11,6 +11,8 @@ metadata:
     app.kubernetes.io/version: "1.16.0"
     app.kubernetes.io/managed-by: Helm
     app: frontend
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
 spec:
   replicas: 1
   selector:
@@ -34,7 +36,7 @@ spec:
         - name: app
           securityContext:
             {}
-          image: "ghcr.io/utwo/sandbox-frontend:edc3939"
+          image: "ghcr.io/utwo/sandbox-frontend:9bc33fd"
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
