@@ -39,6 +39,6 @@ spec:
         name: "{{.name}}"
         namespace: trivy-operator
       syncPolicy:
-        automated: {}
+        # automated: {}
         syncOptions:
           - CreateNamespace=true

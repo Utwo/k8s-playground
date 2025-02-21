@@ -32,6 +32,6 @@ spec:
     name: "in-cluster"
     namespace: windmill
   syncPolicy:
-    automated: {}
+    # automated: {}
     syncOptions:
       - CreateNamespace=true
