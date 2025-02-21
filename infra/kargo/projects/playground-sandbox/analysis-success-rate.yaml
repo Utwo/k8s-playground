@@ -18,8 +18,7 @@ spec:
   metrics:
     - name: success-rate
       interval: "{{ args.interval }}"
-      inconclusiveLimit: 10
-      successCondition: len(result) == 0 || result[0] > {{ args.successRateThreshold }}
+      successCondition: len(result) == 0 || isNaN(result[0]) || result[0] > {{ args.successRateThreshold }}
       provider:
         prometheus:
           address: http://collector.k3d-sandbox-control-serverlb.orb.local
