@@ -41,7 +41,7 @@ spec:
         namespace: keda
         name: "{{.name}}"
       syncPolicy:
-        automated: {}
+        # automated: {}
         syncOptions:
           - CreateNamespace=true
           - ServerSideApply=true
