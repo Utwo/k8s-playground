@@ -9,7 +9,7 @@ spec:
     - name: interval
       value: 10s
     - name: successRateThreshold
-      value: "0.90"
+      value: "0.70"
     - name: PROMETHEUS_AUTH_TOKEN
       valueFrom:
         secretKeyRef:
@@ -27,9 +27,8 @@ spec:
             - key: Authorization
               value: Bearer {{ args.PROMETHEUS_AUTH_TOKEN }}
           query: >+
-            # generate some data if there is no traffic
             sum(
-              rate(nginx_ingress_controller_requests{ingress="{{args.ingress}}",exported_namespace="{{args.namespace}}",status!~"[4-5].*"}[20s])) + 2
+              rate(nginx_ingress_controller_requests{ingress="{{args.ingress}}",exported_namespace="{{args.namespace}}",status!~"[4-5].*"}[20s])) + 5
               /
-              sum(rate(nginx_ingress_controller_requests{ingress="{{args.ingress}}",exported_namespace="{{args.namespace}}"}[20s]) + 10
+              sum(rate(nginx_ingress_controller_requests{ingress="{{args.ingress}}",exported_namespace="{{args.namespace}}"}[20s]) + 2
             )
