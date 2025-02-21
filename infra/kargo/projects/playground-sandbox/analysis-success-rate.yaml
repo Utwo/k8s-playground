@@ -9,7 +9,7 @@ spec:
     - name: interval
       value: 10s
     - name: successRateThreshold
-      value: "0.70"
+      value: "10"
     - name: PROMETHEUS_AUTH_TOKEN
       valueFrom:
         secretKeyRef:
@@ -18,7 +18,8 @@ spec:
   metrics:
     - name: success-rate
       interval: "{{ args.interval }}"
-      successCondition: len(result) == 0 || isNaN(result[0]) || result[0] > {{ args.successRateThreshold }}
+      count: 3
+      failureCondition: result[0] >= {{ args.successRateThreshold }}
       provider:
         prometheus:
           address: http://collector.k3d-sandbox-control-serverlb.orb.local
@@ -27,8 +28,4 @@ spec:
             - key: Authorization
               value: Bearer {{ args.PROMETHEUS_AUTH_TOKEN }}
           query: >+
-            sum(
-              rate(nginx_ingress_controller_requests{ingress="{{args.ingress}}",exported_namespace="{{args.namespace}}",status!~"[4-5].*"}[20s])) + 5
-              /
-              sum(rate(nginx_ingress_controller_requests{ingress="{{args.ingress}}",exported_namespace="{{args.namespace}}"}[20s]) + 2
-            )
+            sum(irate(nginx_ingress_controller_requests{ingress="{{args.ingress}}",exported_namespace="{{args.namespace}}",status=~"[4-5].*"}[1m]))
