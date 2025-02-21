@@ -13,7 +13,7 @@ spec:
       directory:
         recurse: true
     - repoURL: https://grafana.github.io/helm-charts
-      targetRevision: 8.8.4
+      targetRevision: 8.10.0
       chart: grafana
       helm:
         valueFiles:
