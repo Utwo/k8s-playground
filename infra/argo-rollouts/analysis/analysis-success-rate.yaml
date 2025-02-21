@@ -21,7 +21,7 @@ spec:
       successCondition: len(result) == 0 || result[0] > {{ args.successRateThreshold }}
       provider:
         prometheus:
-          address: http://collector.172.20.0.6.nip.io
+          address: http://collector.k3d-sandbox-control-serverlb.orb.local
           insecure: true
           headers:
             - key: Authorization

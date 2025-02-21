@@ -8,7 +8,7 @@ gateway:
     enabled: true
     ingressClassName: "nginx"
     hosts:
-      - host: loki.172.20.0.6.nip.io
+      - host: loki.k3d-sandbox-control-serverlb.orb.local
         paths:
           - path: /
             pathType: Prefix

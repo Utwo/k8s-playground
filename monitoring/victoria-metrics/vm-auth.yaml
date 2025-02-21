@@ -5,7 +5,7 @@ metadata:
 spec:
   ingress:
     class_name: nginx
-    host: collector.172.20.0.6.nip.io
+    host: collector.k3d-sandbox-control-serverlb.orb.local
   userNamespaceSelector:
     matchLabels:
       kubernetes.io/metadata.name: victoria-metrics

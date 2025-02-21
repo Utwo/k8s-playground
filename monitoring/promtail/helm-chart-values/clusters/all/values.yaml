@@ -22,7 +22,7 @@ config:
   logLevel: warn
 
   clients:
-    - url: http://loki.172.20.0.6.nip.io/loki/api/v1/push
+    - url: http://loki.k3d-sandbox-control-serverlb.orb.local/loki/api/v1/push
       tenant_id: "my_org"
       basic_auth:
         username: admin
