@@ -45,6 +45,6 @@ spec:
         name: "{{.name}}"
         namespace: "promtail"
       syncPolicy:
-        automated: {}
+        # automated: {}
         syncOptions:
           - CreateNamespace=true
