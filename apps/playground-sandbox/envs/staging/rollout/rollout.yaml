@@ -39,12 +39,6 @@ spec:
         - setWeight: 5
         - pause:
             duration: 1m
-        - setWeight: 15
-        - pause:
-            duration: 1m
-        - setWeight: 50
-        - pause:
-            duration: 1m
         - setWeight: 75
         - pause:
             duration: 1m
