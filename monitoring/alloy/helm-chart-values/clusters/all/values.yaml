@@ -46,6 +46,8 @@ clusterEvents:
 
 clusterMetrics:
   enabled: true
+  windows-exporter:
+    deploy: false
 
 prometheusOperatorObjects:
   enabled: true
