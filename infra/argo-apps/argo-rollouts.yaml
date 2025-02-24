@@ -45,6 +45,6 @@ spec:
         namespace: argo-rollouts
         name: "{{.name}}"
       syncPolicy:
-        automated: {}
+        # automated: {}
         syncOptions:
           - CreateNamespace=true

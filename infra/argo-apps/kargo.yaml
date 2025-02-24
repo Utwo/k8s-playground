@@ -26,6 +26,6 @@ spec:
     namespace: kargo
     name: in-cluster
   syncPolicy:
-    automated: {}
+    # automated: {}
     syncOptions:
       - CreateNamespace=true
