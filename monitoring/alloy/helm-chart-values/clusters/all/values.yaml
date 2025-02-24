@@ -44,6 +44,9 @@ destinations:
 clusterEvents:
   enabled: true
 
+clusterMetrics:
+  enabled: true
+
 prometheusOperatorObjects:
   enabled: true
   crds:
@@ -85,18 +88,3 @@ integrations:
             ]
         namespaces:
           - collectors
-  loki:
-    instances:
-      - name: loki
-        namespaces:
-          - loki
-        labelSelectors:
-          app.kubernetes.io/name: loki
-        logs:
-          tuning:
-            # extract logfmt fields and set them as structured metadata
-            structuredMetadata:
-              caller:
-              tenant:
-              org_id:
-              user:
