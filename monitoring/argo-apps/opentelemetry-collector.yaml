@@ -20,6 +20,6 @@ spec:
     namespace: opentelemetry-collector
     name: in-cluster
   syncPolicy:
-    automated: {}
+    # automated: {}
     syncOptions:
       - CreateNamespace=true
