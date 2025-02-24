@@ -3,14 +3,17 @@ fullnameOverride: "kube-prometheus-stack"
 cleanPrometheusOperatorObjectNames: true
 
 defaultRules:
-  create: false
-  disabled:
-    # TODO: https://github.com/prometheus/prometheus/issues/14349
-    PrometheusNotConnectedToAlertmanagers: true
+  create: true
 
-prometheusOperator:
-  enabled: false
 grafana:
+  enabled: false
+  forceDeployDashboards: true
+  sidecar:
+    dashboards:
+      multicluster:
+        global:
+          enabled: true
+prometheusOperator:
   enabled: false
 kubeControllerManager:
   enabled: false
@@ -24,8 +27,10 @@ kubeProxy:
   enabled: false
 alertmanager:
   enabled: false
+  forceDeployDashboards: true
 nodeExporter:
   enabled: false
+  forceDeployDashboards: true
 kubeStateMetrics:
   enabled: false
 crds:
