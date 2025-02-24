@@ -46,6 +46,8 @@ clusterEvents:
 
 clusterMetrics:
   enabled: true
+  node-exporter:
+    jobLabel: node-exporter
   windows-exporter:
     deploy: false
 
