@@ -5,11 +5,11 @@ destinations:
   - name: loki
     type: loki
     url: http://loki-gateway.loki.svc.cluster.local/loki/api/v1/push
+    tenantIdKey: TENANT_ID
     auth:
       type: basic
       usernameKey: LOKI_USERNAME
       passwordKey: LOKI_PASSWORD
-      tenantIdKey: TENANT_ID
     secret:
       create: false
       name: alloy-secret
@@ -29,3 +29,7 @@ destinations:
         secretKeyRef:
           name: alloy-secret
           key: TEMPO_PASSWORD
+    secret:
+      create: false
+      name: alloy-secret
+      namespace: alloy
