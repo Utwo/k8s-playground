@@ -1,23 +1,31 @@
-grafana:
-  enabled: false
-  forceDeployDashboards: true
-  sidecar:
-    dashboards:
-      multicluster:
-        global:
-          enabled: true
-
-alertmanager:
-  forceDeployDashboards: true
-
-defaultRules:
-  create: true
-
-prometheus:
-  prometheusSpec:
-    replicaExternalLabelNameClear: true
-    prometheusExternalLabelNameClear: true
-    retention: 10m
-    remoteWrite:
-      - url: "http://vmsingle-server.victoria-metrics.svc.cluster.local:8429/api/v1/write"
-    remoteWriteDashboards: true
+destinations:
+  - name: prometheus
+    type: prometheus
+    url: http://vmsingle-server.victoria-metrics.svc.cluster.local:8429/api/v1/write
+  - name: loki
+    type: loki
+    url: http://loki-gateway.loki.svc.cluster.local/loki/api/v1/push
+    auth:
+      type: basic
+      username: "admin"
+      passwordKey: LOKI_PASSWORD
+      tenantIdKey: TENANT_ID
+    secret:
+      create: false
+      name: alloy-secret
+      namespace: alloy
+  - name: tempo
+    type: otlp
+    url: http://tempo.k3d-sandbox-control-serverlb.orb.local/otlp
+    tenantIdKey: TENANT_ID
+    metrics:
+      enabled: false
+    logs:
+      enabled: false
+    auth:
+      type: basic
+      username: "admin"
+      passwordFrom:
+        secretKeyRef:
+          name: alloy-secret
+          key: TEMPO_PASSWORD
