@@ -8,6 +8,8 @@ defaultRules:
     # TODO: https://github.com/prometheus/prometheus/issues/14349
     PrometheusNotConnectedToAlertmanagers: true
 
+prometheusOperator:
+  enabled: false
 grafana:
   enabled: false
 kubeControllerManager:
