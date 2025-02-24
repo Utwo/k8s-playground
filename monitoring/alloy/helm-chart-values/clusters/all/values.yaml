@@ -46,11 +46,15 @@ clusterEvents:
 
 clusterMetrics:
   enabled: true
+  kubelet:
+    jobLabel: kubelet
   node-exporter:
     jobLabel: node-exporter
     metricsTuning:
       includeMetrics:
         - node_uname_info
+  kube-state-metrics:
+    jobLabel: kube-state-metrics
   windows-exporter:
     deploy: false
 
