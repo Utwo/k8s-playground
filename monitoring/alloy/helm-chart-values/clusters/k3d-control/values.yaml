@@ -1,0 +1,23 @@
+grafana:
+  enabled: false
+  forceDeployDashboards: true
+  sidecar:
+    dashboards:
+      multicluster:
+        global:
+          enabled: true
+
+alertmanager:
+  forceDeployDashboards: true
+
+defaultRules:
+  create: true
+
+prometheus:
+  prometheusSpec:
+    replicaExternalLabelNameClear: true
+    prometheusExternalLabelNameClear: true
+    retention: 10m
+    remoteWrite:
+      - url: "http://vmsingle-server.victoria-metrics.svc.cluster.local:8429/api/v1/write"
+    remoteWriteDashboards: true

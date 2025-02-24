@@ -1,0 +1,46 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: alloy
+  namespace: argocd
+spec:
+  goTemplate: true
+  generators:
+    - clusters:
+        selector:
+          matchLabels:
+            monitoring: "true"
+        values:
+          clusterName: "{{.name}}"
+    - list:
+        elements:
+          - name: in-cluster
+            values:
+              clusterName: k3d-control
+  template:
+    metadata:
+      name: "alloy-{{.values.clusterName}}"
+    spec:
+      project: monitoring
+      sources:
+        - repoURL: https://github.com/Utwo/k8s-playground
+          path: monitoring/alloy
+          targetRevision: HEAD
+          ref: myRepo # repo is available via symlink "myRepo"
+        - repoURL: https://grafana.github.io/helm-charts
+          targetRevision: 2.0.13
+          chart: k8s-monitoring
+          helm:
+            ignoreMissingValueFiles: true
+            valueFiles:
+              - $myRepo/monitoring/alloy/helm-chart-values/clusters/all/values.yaml
+              - $myRepo/monitoring/alloy/helm-chart-values/clusters/{{.values.clusterName}}/values.yaml
+            parameters:
+              - name: "cluster.name"
+                value: "{{.values.clusterName}}"
+      destination:
+        name: "{{.name}}"
+        namespace: alloy
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true

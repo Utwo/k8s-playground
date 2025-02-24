@@ -1,0 +1,99 @@
+destinations:
+  - name: prometheus
+    type: prometheus
+    url: http://collector.k3d-sandbox-control-serverlb.orb.local/api/v1/write
+    auth:
+      type: bearerToken
+      bearerTokenKey: PROMETHEUS_AUTH_TOKEN
+    secret:
+      create: false
+      name: alloy-secret
+      namespace: alloy
+  - name: loki
+    type: loki
+    url: http://loki.k3d-sandbox-control-serverlb.orb.local/loki/api/v1/push
+    auth:
+      type: basic
+      username: "admin"
+      passwordKey: LOKI_PASSWORD
+      tenantIdKey: TENANT_ID
+    secret:
+      create: false
+      name: alloy-secret
+      namespace: alloy
+  - name: tempo
+    type: otlp
+    url: http://tempo.k3d-sandbox-control-serverlb.orb.local/otlp
+    tenantIdKey: TENANT_ID
+    metrics:
+      enabled: false
+    logs:
+      enabled: false
+    auth:
+      type: basic
+      username: "admin"
+      passwordFrom:
+        secretKeyRef:
+          name: alloy-secret
+          key: TEMPO_PASSWORD
+
+clusterEvents:
+  enabled: true
+
+prometheusOperatorObjects:
+  enabled: true
+  crds:
+    deploy: false
+
+podLogs:
+  enabled: true
+
+alloy-metrics:
+  enabled: true
+
+alloy-logs:
+  enabled: true
+
+alloy-singleton:
+  enabled: true
+
+integrations:
+  collector: alloy-singleton
+  alloy:
+    instances:
+      # monitor the collector gathering and sending meta-monitoring metrics/logs to the meta-monitoring cluster
+      - name: alloy-in-logs
+        namespaces:
+          - logs
+        labelSelectors:
+          app.kubernetes.io/name: alloy-singleton
+
+      # monitor the collectors gathering and sending metrics/logs to the local cluster
+      - name: alloy
+        labelSelectors:
+          app.kubernetes.io/name:
+            [
+              alloy-singleton,
+              alloy-metrics,
+              alloy-logs,
+              alloy-profiles,
+              alloy-receiver,
+            ]
+        namespaces:
+          - collectors
+
+  loki:
+    instances:
+      - name: loki
+        namespaces:
+          - loki
+        labelSelectors:
+          app.kubernetes.io/name: loki
+        logs:
+          tuning:
+            # extract logfmt fields and set them as structured metadata
+            structuredMetadata:
+              caller:
+              tenant:
+              org_id:
+              user:
