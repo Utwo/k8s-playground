@@ -7,7 +7,7 @@ destinations:
     url: http://loki-gateway.loki.svc.cluster.local/loki/api/v1/push
     auth:
       type: basic
-      username: "admin"
+      usernameKey: LOKI_USERNAME
       passwordKey: LOKI_PASSWORD
       tenantIdKey: TENANT_ID
     secret:
