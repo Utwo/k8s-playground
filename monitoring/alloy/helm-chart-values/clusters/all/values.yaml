@@ -43,7 +43,7 @@ clusterEvents:
 prometheusOperatorObjects:
   enabled: true
   crds:
-    deploy: false
+    deploy: true
 
 podLogs:
   enabled: true
@@ -81,7 +81,6 @@ integrations:
             ]
         namespaces:
           - collectors
-
   loki:
     instances:
       - name: loki
