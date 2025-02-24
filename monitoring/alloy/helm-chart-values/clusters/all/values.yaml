@@ -55,6 +55,10 @@ clusterMetrics:
     metricsTuning:
       includeMetrics:
         - node_uname_info
+        - node_disk_io_time_seconds_total
+        - node_disk_io_time_weighted_seconds_total
+        - node_load1
+        - node_vmstat_pgmajfault
   kube-state-metrics:
     jobLabel: kube-state-metrics
   windows-exporter:
