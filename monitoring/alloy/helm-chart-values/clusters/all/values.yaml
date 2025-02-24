@@ -48,6 +48,8 @@ clusterMetrics:
   enabled: true
   kubelet:
     jobLabel: kubelet
+  cadvisor:
+    jobLabel: kubelet
   node-exporter:
     jobLabel: node-exporter
     metricsTuning:
