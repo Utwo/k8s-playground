@@ -22,32 +22,11 @@ kubeProxy:
   enabled: false
 alertmanager:
   enabled: false
-
-prometheus-node-exporter:
-  fullnameOverride: node-exporter
-  kubeRBACProxy:
-    # We need kubeRBACProxy in front of node-exporter because the node-exporter daemonset expose a port public to the internet
-    # When enabled, creates a kube-rbac-proxy to protect the node-exporter http endpoint.
-    # The requests are served through the same service but requests are HTTPS.
-    enabled: true
-  prometheus:
-    monitor:
-      scheme: https
-      bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
-      tlsConfig:
-        insecureSkipVerify: true
-
+# nodeExporter:
+#   enabled: false
+kubeStateMetrics:
+  enabled: false
+crds:
+  enabled: false
 prometheus:
-  agentMode: true
-  prometheusSpec:
-    replicaExternalLabelNameClear: true
-    prometheusExternalLabelNameClear: true
-    secrets:
-      - prometheus-auth
-    retention: 10m
-    remoteWrite:
-      - url: "http://collector.k3d-sandbox-control-serverlb.orb.local/api/v1/write"
-        authorization:
-          credentials:
-            key: AUTH_TOKEN
-            name: prometheus-auth
+  enabled: false
