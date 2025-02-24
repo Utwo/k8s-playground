@@ -48,6 +48,9 @@ clusterMetrics:
   enabled: true
   node-exporter:
     jobLabel: node-exporter
+    metricsTuning:
+      includeMetrics:
+        - node_uname_info
   windows-exporter:
     deploy: false
 
