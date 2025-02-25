@@ -43,6 +43,9 @@ clusterEvents:
 
 clusterMetrics:
   enabled: true
+  apiServer:
+    enabled: true
+    jobLabel: apiserver
   kubelet:
     jobLabel: kubelet
   cadvisor:
