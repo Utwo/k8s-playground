@@ -6,3 +6,6 @@ serviceMonitor:
 metricsGenerator:
   enabled: true
   remoteWriteUrl: "http://vmsingle-server.victoria-metrics.svc.cluster.local:8429/api/v1/write"
+
+tempo:
+  multitenancyEnabled: true
