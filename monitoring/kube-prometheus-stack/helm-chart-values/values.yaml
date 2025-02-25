@@ -21,6 +21,8 @@ kubeEtcd:
   enabled: false
 kubeScheduler:
   enabled: false
+kubernetesServiceMonitors:
+  enabled: false
 kubeProxy:
   enabled: false
 alertmanager:
