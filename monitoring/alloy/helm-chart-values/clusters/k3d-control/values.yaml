@@ -33,27 +33,3 @@ destinations:
       create: false
       name: alloy-secret
       namespace: alloy
-
-integrations:
-  loki:
-    instances:
-      - name: loki
-        namespaces:
-          - loki
-        labelSelectors:
-          app.kubernetes.io/name: loki
-        logs:
-          tuning:
-            # extract logfmt fields and set them as structured metadata
-            structuredMetadata:
-              caller:
-              tenant:
-              org_id:
-              user:
-  tempo:
-    instances:
-      - name: tempo
-        namespaces:
-          - tempo
-        labelSelectors:
-          app.kubernetes.io/name: tempo
