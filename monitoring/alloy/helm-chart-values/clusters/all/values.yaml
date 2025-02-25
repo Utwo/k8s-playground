@@ -63,6 +63,7 @@ clusterMetrics:
     jobLabel: kube-state-metrics
   windows-exporter:
     deploy: false
+    enabled: false
 
 applicationObservability:
   enabled: true
@@ -99,27 +100,6 @@ alloy-receiver:
 
 alloy-singleton:
   enabled: true
-# integrations:
-#   collector: alloy-singleton
-#   alloy:
-#     instances:
-#       # monitor the collector gathering and sending meta-monitoring metrics/logs to the meta-monitoring cluster
-#       - name: alloy-in-logs
-#         namespaces:
-#           - logs
-#         labelSelectors:
-#           app.kubernetes.io/name: alloy-singleton
 
-#       # monitor the collectors gathering and sending metrics/logs to the local cluster
-#       - name: alloy
-#         labelSelectors:
-#           app.kubernetes.io/name:
-#             [
-#               alloy-singleton,
-#               alloy-metrics,
-#               alloy-logs,
-#               alloy-profiles,
-#               alloy-receiver,
-#             ]
-#         namespaces:
-#           - collectors
+integrations:
+  collector: alloy-singleton
