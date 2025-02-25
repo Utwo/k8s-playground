@@ -25,10 +25,7 @@ destinations:
     auth:
       type: basic
       username: "admin"
-      passwordFrom:
-        secretKeyRef:
-          name: alloy-secret
-          key: TEMPO_PASSWORD
+      passwordKey: TEMPO_PASSWORD
     secret:
       create: false
       name: alloy-secret
