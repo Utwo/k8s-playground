@@ -1,0 +1,100 @@
+fullnameOverride: otel-kube-stack
+collectors:
+  daemon:
+    ports:
+      - appProtocol: grpc
+        name: otlp-grpc
+        port: 4317
+        protocol: TCP
+        hostPort: 4317 # Force the hostPort
+    env:
+      - name: PROMETHEUS_AUTH_TOKEN
+        valueFrom:
+          secretKeyRef:
+            key: PROMETHEUS_AUTH_TOKEN
+            name: otel-collector-secret
+      - name: LOKI_USERNAME
+        valueFrom:
+          secretKeyRef:
+            key: LOKI_USERNAME
+            name: otel-collector-secret
+      - name: LOKI_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: LOKI_PASSWORD
+            name: otel-collector-secret
+    config:
+      exporters:
+        otlp/tempo:
+          endpoint: tempo.tempo.svc.cluster.local:4317
+          headers:
+            "Authorization": "Bearer ${PROMETHEUS_AUTH_TOKEN}"
+          tls:
+            insecure: true
+        otlphttp/logs:
+          endpoint: "http://loki-gateway.loki.svc.cluster.local/otlp"
+          auth:
+            authenticator: basicauth/loki
+          headers:
+            "X-Scope-OrgID": "my_org"
+          tls:
+            insecure: true
+        otlphttp/victoriametrics:
+          compression: gzip
+          encoding: proto
+          metrics_endpoint: http://vmsingle-server.victoria-metrics.svc.cluster.local:8429/opentelemetry/v1/metrics
+          headers:
+            "Authorization": "Bearer ${PROMETHEUS_AUTH_TOKEN}"
+          tls:
+            insecure: true
+      extensions:
+        basicauth/loki:
+          client_auth:
+            username: ${LOKI_USERNAME}
+            password: ${LOKI_PASSWORD}
+      service:
+        extensions: [basicauth/loki]
+        pipelines:
+          metrics:
+            exporters: [otlphttp/victoriametrics]
+          traces:
+            exporters: [otlp/tempo]
+          logs:
+            exporters: [otlphttp/logs]
+  cluster:
+    env:
+      - name: PROMETHEUS_AUTH_TOKEN
+        valueFrom:
+          secretKeyRef:
+            key: PROMETHEUS_AUTH_TOKEN
+            name: otel-collector-secret
+    config:
+      exporters:
+        otlphttp/victoriametrics:
+          compression: gzip
+          encoding: proto
+          metrics_endpoint: http://vmsingle-server.victoria-metrics.svc.cluster.local:8429/opentelemetry/v1/metrics
+          headers:
+            "Authorization": "Bearer ${PROMETHEUS_AUTH_TOKEN}"
+          tls:
+            insecure: true
+      service:
+        pipelines:
+          metrics:
+            exporters: [otlphttp/victoriametrics]
+instrumentation:
+  enabled: true
+  env:
+    - name: OTEL_K8S_NODE_NAME
+      valueFrom:
+        fieldRef:
+          fieldPath: spec.nodeName
+  exporter:
+    endpoint: http://${OTEL_K8S_NODE_NAME}:4317
+  python:
+    env:
+      - name: OTEL_EXPORTER_OTLP_ENDPOINT
+        value: http://${OTEL_K8S_NODE_NAME}:4318
+opAMPBridge:
+  enabled: true
+  addReportingLabel: true

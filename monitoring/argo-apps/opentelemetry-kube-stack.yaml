@@ -1,0 +1,47 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: opentelemetry-kube-stack
+  namespace: argocd
+spec:
+  goTemplate: true
+  generators:
+    - clusters:
+        selector:
+          matchLabels:
+            monitoring: "true"
+        values:
+          clusterName: "{{.name}}"
+    - list:
+        elements:
+          - name: in-cluster
+            values:
+              clusterName: k3d-control
+  template:
+    metadata:
+      name: "opentelemetry-kube-stack-{{.values.clusterName}}"
+    spec:
+      project: monitoring
+      sources:
+        - repoURL: https://github.com/Utwo/k8s-playground
+          path: monitoring/opentelemetry-kube-stack
+          targetRevision: HEAD
+          ref: myRepo # repo is available via symlink "myRepo"
+        - repoURL: https://open-telemetry.github.io/opentelemetry-helm-charts
+          targetRevision: 0.4.1
+          chart: opentelemetry-kube-stack
+          helm:
+            ignoreMissingValueFiles: true
+            valueFiles:
+              - $myRepo/monitoring/opentelemetry-kube-stack/helm-chart-values/clusters/all/values.yaml
+              - $myRepo/monitoring/opentelemetry-kube-stack/helm-chart-values/clusters/{{.values.clusterName}}/values.yaml
+            parameters:
+              - name: "clusterName"
+                value: "{{.values.clusterName}}"
+      destination:
+        name: "{{.name}}"
+        namespace: opentelemetry-kube-stack
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true

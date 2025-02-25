@@ -7,5 +7,6 @@ spec:
   extraArgs:
     opentsdbHTTPListenAddr: ":4242"
     loggerLevel: WARN
+    opentelemetry.usePrometheusNaming: "true"
     vmalert.proxyURL: "http://vmalert-alert-server:8080"
   resources: {}
