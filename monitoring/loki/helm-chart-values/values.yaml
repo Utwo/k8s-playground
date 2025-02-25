@@ -1,3 +1,4 @@
+# https://github.com/grafana/loki/blob/main/production/helm/loki/single-binary-values.yaml
 deploymentMode: SingleBinary
 
 gateway:
@@ -35,8 +36,13 @@ loki:
         index:
           prefix: index_
           period: 24h
-  pattern_ingester:
+  ingester:
+    chunk_encoding: snappy
+  tracing:
     enabled: true
+  querier:
+    # Default is 4, if you have enough memory and CPU you can increase, reduce if OOMing
+    max_concurrent: 2
   limits_config:
     retention_period: 1d
 
