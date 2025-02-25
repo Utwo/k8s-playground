@@ -1,7 +1,5 @@
 fullnameOverride: "kube-prometheus-stack"
 
-cleanPrometheusOperatorObjectNames: true
-
 defaultRules:
   create: true
 
