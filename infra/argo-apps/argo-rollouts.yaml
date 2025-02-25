@@ -40,7 +40,7 @@ spec:
                     additionalLabels:
                       release: "kube-prometheus-stack-{{.name}}"
           repoURL: https://argoproj.github.io/argo-helm
-          targetRevision: 2.38.2
+          targetRevision: 2.39.0
       destination:
         namespace: argo-rollouts
         name: "{{.name}}"
