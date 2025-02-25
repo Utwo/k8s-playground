@@ -1,6 +1,19 @@
 fullnameOverride: otel-kube-stack
 collectors:
   daemon:
+    scrape_configs_file: "examples/prometheus-otel/kubelet_scrape_configs.yaml"
+    # Adding an additional label for this collctor.
+    labels:
+      otel-collector-type: otel-daemonset
+    targetAllocator:
+      enabled: true
+      image: ghcr.io/open-telemetry/opentelemetry-operator/target-allocator:main
+      allocationStrategy: per-node
+      prometheusCR:
+        enabled: true
+        podMonitorSelector: {}
+        scrapeInterval: "30s"
+        serviceMonitorSelector: {}
     ports:
       - appProtocol: grpc
         name: otlp-grpc
@@ -56,12 +69,23 @@ collectors:
         extensions: [basicauth/loki]
         pipelines:
           metrics:
+            receivers: [prometheus]
             exporters: [otlphttp/victoriametrics]
           traces:
             exporters: [otlp/tempo]
           logs:
             exporters: [otlphttp/logs]
+    presets:
+      logsCollection:
+        enabled: true
+      kubeletMetrics:
+        enabled: false
+      hostMetrics:
+        enabled: false
+      kubernetesAttributes:
+        enabled: false
   cluster:
+    enabled: false
     env:
       - name: PROMETHEUS_AUTH_TOKEN
         valueFrom:
@@ -82,19 +106,20 @@ collectors:
         pipelines:
           metrics:
             exporters: [otlphttp/victoriametrics]
+
 instrumentation:
-  enabled: true
-  env:
-    - name: OTEL_K8S_NODE_NAME
-      valueFrom:
-        fieldRef:
-          fieldPath: spec.nodeName
-  exporter:
-    endpoint: http://${OTEL_K8S_NODE_NAME}:4317
-  python:
-    env:
-      - name: OTEL_EXPORTER_OTLP_ENDPOINT
-        value: http://${OTEL_K8S_NODE_NAME}:4318
+  enabled: false
 opAMPBridge:
+  enabled: false
+kubernetesServiceMonitors:
   enabled: true
-  addReportingLabel: true
+kubeApiServer:
+  enabled: true
+kubelet:
+  enabled: true
+kubeControllerManager:
+  enabled: true
+kubeStateMetrics:
+  enabled: true
+nodeExporter:
+  enabled: true
