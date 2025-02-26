@@ -94,6 +94,8 @@ collectors:
         enabled: false
       hostMetrics:
         enabled: false
+      clusterMetrics:
+        enabled: false
       kubernetesAttributes:
         enabled: false
   cluster:
