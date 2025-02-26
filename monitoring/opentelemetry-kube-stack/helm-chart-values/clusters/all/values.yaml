@@ -1,6 +1,10 @@
 fullnameOverride: otel-kube-stack
 collectors:
   daemon:
+    resources:
+      limits:
+        cpu: 1
+        memory: 500Mi
     scrape_configs_file: "examples/prometheus-otel/kubelet_scrape_configs.yaml"
     # Adding an additional label for this collctor.
     labels:
@@ -8,6 +12,10 @@ collectors:
     targetAllocator:
       enabled: true
       image: ghcr.io/open-telemetry/opentelemetry-operator/target-allocator:main
+      resources:
+        limits:
+          cpu: 1
+          memory: 500Mi
       allocationStrategy: per-node
       prometheusCR:
         enabled: true
