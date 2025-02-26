@@ -2,7 +2,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   labels:
-    release: kube-prometheus-stack-k3d-control
+    release: prometheus-collector
   name: vmsingle-server
 spec:
   endpoints:

@@ -3,7 +3,7 @@ kind: ServiceMonitor
 metadata:
   name: argocd-metrics
   labels:
-    release: kube-prometheus-stack-k3d-control
+    release: prometheus-collector
 spec:
   selector:
     matchLabels:

@@ -33,12 +33,6 @@ spec:
           helm:
             valueFiles:
               - $myRepo/infra/argo-rollouts/values.yaml
-            valuesObject:
-              controller:
-                metrics:
-                  serviceMonitor:
-                    additionalLabels:
-                      release: "kube-prometheus-stack-{{.name}}"
           repoURL: https://argoproj.github.io/argo-helm
           targetRevision: 2.38.2
       destination:

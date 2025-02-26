@@ -4,5 +4,7 @@ controller:
     enabled: true
     serviceMonitor:
       enabled: true
+      additionalLabels:
+        release: "prometheus-collector"
 dashboard:
   enabled: true

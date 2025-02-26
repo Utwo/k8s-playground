@@ -2,7 +2,7 @@ backend:
   serviceMonitor:
     enabled: true
     additionalLabels:
-      release: kube-prometheus-stack-k3d-apps
+      release: prometheus-collector
   env:
     - name: SANDBOX_NODE_LABEL
       value: "default"

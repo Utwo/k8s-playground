@@ -1,7 +1,7 @@
 serviceMonitor:
   enabled: true
   additionalLabels:
-    release: kube-prometheus-stack-k3d-control
+    release: prometheus-collector
 
 metricsGenerator:
   enabled: true

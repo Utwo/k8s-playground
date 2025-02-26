@@ -31,7 +31,7 @@ spec:
                 enabled: true
                 serviceMonitor:
                   additionalLabels:
-                    release: "kube-prometheus-stack-{{.values.clusterName}}"
+                    release: "prometheus-collector"
                   enabled: true
               # -- Will add custom configuration options to Nginx https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/
               config:
