@@ -1,4 +1,3 @@
-fullnameOverride: otel-kube-stack
 collectors:
   daemon:
     config:
