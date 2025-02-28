@@ -19,13 +19,15 @@ collectors:
       allocationStrategy: per-node
       prometheusCR:
         enabled: true
-        podMonitorSelector:
-          matchLabels:
-            release: prometheus-collector
+        podMonitorSelector: {}
         scrapeInterval: "30s"
-        serviceMonitorSelector:
-          matchLabels:
-            release: prometheus-collector
+        serviceMonitorSelector: {}
+        # podMonitorSelector:
+        #   matchLabels:
+        #     release: prometheus-collector
+        # serviceMonitorSelector:
+        #   matchLabels:
+        #     release: prometheus-collector
     ports:
       - appProtocol: grpc
         name: otlp-grpc
