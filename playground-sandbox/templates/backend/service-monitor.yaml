@@ -11,7 +11,7 @@ metadata:
     app.kubernetes.io/version: "1.16.0"
     app.kubernetes.io/managed-by: Helm
     app: backend
-    release: kube-prometheus-stack-k3d-apps
+    release: prometheus-collector
 spec:
   namespaceSelector:
     matchNames:
