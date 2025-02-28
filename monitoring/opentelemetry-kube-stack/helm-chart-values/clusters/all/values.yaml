@@ -57,7 +57,7 @@ collectors:
           tls:
             insecure: true
         otlphttp/logs:
-          endpoint: "http://loki-gateway.loki.svc.cluster.local/otlp"
+          endpoint: "http://loki.k3d-sandbox-control-serverlb.orb.local/otlp"
           auth:
             authenticator: basicauth/loki
           headers:
@@ -67,7 +67,7 @@ collectors:
         otlphttp/victoriametrics:
           compression: gzip
           encoding: proto
-          metrics_endpoint: http://vmsingle-server.victoria-metrics.svc.cluster.local:8429/opentelemetry/v1/metrics
+          metrics_endpoint: http://collector.k3d-sandbox-control-serverlb.orb.local/opentelemetry/v1/metrics
           headers:
             "Authorization": "Bearer ${PROMETHEUS_AUTH_TOKEN}"
           tls:

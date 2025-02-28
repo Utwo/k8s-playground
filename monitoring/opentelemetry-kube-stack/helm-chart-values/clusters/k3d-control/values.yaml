@@ -1,0 +1,11 @@
+fullnameOverride: otel-kube-stack
+collectors:
+  daemon:
+    config:
+      exporters:
+        otlp/tempo:
+          endpoint: tempo.tempo.svc.cluster.local:4317
+        otlphttp/logs:
+          endpoint: "http://loki-gateway.loki.svc.cluster.local/otlp"
+        otlphttp/victoriametrics:
+          metrics_endpoint: http://vmsingle-server.victoria-metrics.svc.cluster.local:8429/opentelemetry/v1/metrics
