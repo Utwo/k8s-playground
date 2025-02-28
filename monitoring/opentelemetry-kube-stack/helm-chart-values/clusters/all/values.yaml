@@ -1,4 +1,9 @@
 fullnameOverride: otel-kube-stack
+
+extraEnvs:
+  - name: OTEL_RESOURCE_ATTRIBUTES
+    value: "k8s.cluster.name=k3d-control,cluster=k3d-control"
+
 collectors:
   daemon:
     resources:
