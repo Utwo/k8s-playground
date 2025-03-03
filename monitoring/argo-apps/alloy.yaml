@@ -9,7 +9,7 @@ spec:
     - clusters:
         selector:
           matchLabels:
-            monitoring: "true"
+            alloy: "true"
         values:
           clusterName: "{{.name}}"
     - list:
