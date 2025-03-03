@@ -1,0 +1,37 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: teleport
+  namespace: argocd
+spec:
+  project: infra
+  source:
+    chart: teleport-cluster
+    repoURL: https://charts.releases.teleport.dev
+    targetRevision: 17.2.1
+    helm:
+      valuesObject:
+        clusterName: "teleport.127.0.0.1.nip.io"
+        kubeClusterName: "k3d-control"
+        proxyListenerMode: multiplex
+        proxy:
+          highAvailability:
+            replicaCount: 1
+        service:
+          type: ClusterIP
+        ingress:
+          enabled: true
+          spec:
+            ingressClassName: nginx
+        annotations:
+          ingress:
+            nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+  destination:
+    namespace: teleport-cluster
+    name: "in-cluster"
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    managedNamespaceMetadata:
+      labels:
+        pod-security.kubernetes.io/enforce: baseline
