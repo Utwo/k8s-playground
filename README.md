@@ -244,13 +244,16 @@ https://docs.victoriametrics.com/guides/multi-regional-setup-dedicated-regions/
 [Loki](./monitoring/argo-apps/loki.yaml) is used for storing logs. This service is exposed in order for other clusters to be able to send logs here.
 
 #### Victoria Metrics logs
-[vmlogs](./monitoring/argo-apps/victoria-metrics.yaml) is used for collecting logs. It was added just as a prof of concept. It does not have backup/recovery solutions and it cannot offload old logs to a bucket
+[vmlogs](./monitoring/argo-apps/victoria-metrics.yaml) is used for collecting logs. It was added just as a prof of concept. It does not have backup/recovery solutions and it cannot offload old logs to a bucket. For now we will relly on Loki for storing logs.
 
 #### Kube Prometheus Stack
 [kube-prometheus-stack](./monitoring/argo-apps/kube-prometheus-stack.yaml) is used just for deploying Prometheus rules, alerts and Grafana dashboards. Everything else is disabled because, Grafana Alloy is used for collecting metrics and ServiceMonitors.
 
 #### Grafana Alloy
 [Alloy](./monitoring/argo-apps/alloy.yaml) is an open-telemetry collector distribution, used to collect metrics, logs, traces and profiles. It is installed on every cluster that has the label `alloy: true`. Alloy also installs Prometheus CRDs to collect metrics from `ServiceMonitor`. It is also used to collect Kubernetes events. Logs are sent to Loki, traces to Tempo and metrics to Victoria Metrics. All the data can be visualized in Grafana.
+
+#### Opentelemetry Kube Stack
+[Opentelemetry Kube Stack](./monitoring/argo-apps/opentelemetry-kube-stack.yaml) is an open-telemetry collector distribution, used to collect metrics, logs and traces. It is similar to Grafana Alloy but I couldn't make it work with the kube-prometheus-stack dashboards. We miss the `job` label and because of that the dashboards are not populated. Open [issue](https://github.com/open-telemetry/opentelemetry-helm-charts/issues/1545#issuecomment-2694671722).
 
 #### Alertmanager
 Alerts defined in kube-prometheus-stack are sent to alert-manager. From there we can define multiple routes to send them to external services like Pagerduty.
