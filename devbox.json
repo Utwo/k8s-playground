@@ -1,0 +1,15 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.14.0/.schema/devbox.schema.json",
+  "packages": [
+    "kubectl",
+    "kustomize",
+    "kubernetes-helm",
+    "skaffold",
+    "sops",
+    "age",
+    "argocd",
+    "argo-rollouts",
+    "k3d@latest"
+  ],
+  "shell": {}
+}
