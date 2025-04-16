@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: postgres-db
+  namespace: argocd
+spec:
+  project: infra
+  sources:
+    - repoURL: https://github.com/Utwo/k8s-playground
+      path: ./services/postgres-db
+      targetRevision: HEAD
+  destination:
+    namespace: postgres-db
+    name: in-cluster
+  syncPolicy:
+    # automated: {}
+    syncOptions:
+      - CreateNamespace=true

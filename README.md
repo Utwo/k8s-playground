@@ -17,6 +17,7 @@ A GitOps repository with Kubernetes tools simulating a real enterprise project.
   - ApplicationSet for preview PR
   - Argo Rollouts (Blue-Green & Canary Deployments)
   - Kargo for progressive rollouts between environments
+  - Postgres DB operator
 - **Monitoring & Logging:**
   - VM Metrics
   - Alert Manager
@@ -41,7 +42,6 @@ A GitOps repository with Kubernetes tools simulating a real enterprise project.
 - [vmalertmanagerconfig](https://docs.victoriametrics.com/operator/resources/vmalertmanagerconfig/)
 - [victoria-metrics-anomaly](https://github.com/VictoriaMetrics/helm-charts/tree/master/charts/victoria-metrics-anomaly)
 - Gvizor
-- Postgres DB operator
 - Atlas schema migration
 - Service mesh
 - Crossplane
