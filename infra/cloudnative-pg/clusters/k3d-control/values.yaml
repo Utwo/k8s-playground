@@ -1,0 +1,5 @@
+monitoring:
+  grafanaDashboard:
+    create: true
+    annotations:
+      grafana_folder: "cloudnative-pg"

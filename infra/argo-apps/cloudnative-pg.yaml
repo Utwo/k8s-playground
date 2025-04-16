@@ -1,0 +1,44 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: cloudnative-pg
+  namespace: argocd
+spec:
+  goTemplate: true
+  generators:
+    - clusters:
+        selector:
+          matchLabels:
+            cnpg: "true"
+        values:
+          clusterName: "{{.name}}"
+    - list:
+        elements:
+          - name: in-cluster
+            values:
+              clusterName: k3d-control
+  template:
+    metadata:
+      name: "cloudnative-pg-{{.values.clusterName}}"
+    spec:
+      project: infra
+      sources:
+        - chart: cloudnative-pg
+          helm:
+            ignoreMissingValueFiles: true
+            valueFiles:
+              - $myRepo/infra/cloudnative-pg/clusters/all/values.yaml
+              - $myRepo/infra/cloudnative-pg/clusters/{{.values.clusterName}}/values.yaml
+          repoURL: https://cloudnative-pg.github.io/charts
+          targetRevision: 0.23.2
+        - repoURL: https://github.com/Utwo/k8s-playground
+          targetRevision: HEAD
+          path: infra/cloudnative-pg/clusters/{{.values.clusterName}}
+          ref: myRepo
+      destination:
+        namespace: cloudnative-pg
+        name: "{{.name}}"
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
