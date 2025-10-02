@@ -34,7 +34,7 @@ spec:
             valueFiles:
               - $myRepo/infra/argo-rollouts/values.yaml
           repoURL: https://argoproj.github.io/argo-helm
-          targetRevision: 2.38.2
+          targetRevision: 2.40.5
       destination:
         namespace: argo-rollouts
         name: "{{.name}}"
