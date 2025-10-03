@@ -8,7 +8,7 @@ spec:
   source:
     chart: windmill
     repoURL: https://windmill-labs.github.io/windmill-helm-charts/
-    targetRevision: 2.0.353
+    targetRevision: 2.0.508
     helm:
       valuesObject:
         windmill:
