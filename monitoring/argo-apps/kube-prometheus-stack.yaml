@@ -11,7 +11,7 @@ spec:
       targetRevision: HEAD
       ref: myRepo # repo is available via symlink "myRepo"
     - repoURL: https://prometheus-community.github.io/helm-charts
-      targetRevision: 69.4.0
+      targetRevision: 69.8.2
       chart: kube-prometheus-stack
       helm:
         ignoreMissingValueFiles: true
