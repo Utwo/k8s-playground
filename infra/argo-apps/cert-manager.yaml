@@ -29,7 +29,7 @@ spec:
               prometheus:
                 enabled: false
           repoURL: https://charts.jetstack.io
-          targetRevision: v1.16.3
+          targetRevision: v1.19.2
       destination:
         namespace: cert-manager
         name: "{{name}}"
